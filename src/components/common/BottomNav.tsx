@@ -1,12 +1,12 @@
 import { NavLink } from "react-router-dom";
 
-import HomeSvg from "../assets/icons/home_logo.svg";
-import HotSvg from "../assets/icons/hot_logo.svg";
-import MySvg from "../assets/icons/my_page_logo.svg";
+import HomeSvg from "../../assets/icons/home_logo.svg";
+import HotSvg from "../../assets/icons/hot_logo.svg";
+import MySvg from "../../assets/icons/my_page_logo.svg";
 
-import HomeBlueSvg from "../assets/icons/home_blue_logo.svg";
-import HotBlueSvg from "../assets/icons/hot_blue_logo.svg";
-import MyBlueSvg from "../assets/icons/my_page_blue_logo.svg";
+import HomeBlueSvg from "../../assets/icons/home_blue_logo.svg";
+import HotBlueSvg from "../../assets/icons/hot_blue_logo.svg";
+import MyBlueSvg from "../../assets/icons/my_page_blue_logo.svg";
 
 export function BottomNav() {
   return (

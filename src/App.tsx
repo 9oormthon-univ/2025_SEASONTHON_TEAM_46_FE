@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { BottomNav } from "./components/BottomNav";
+import { BottomNav } from "./components/common/BottomNav";
 import HomePage from "./pages/HomePage";
 import HotPage from "./pages/HotPage";
 import MyPage from "./pages/MyPage";
