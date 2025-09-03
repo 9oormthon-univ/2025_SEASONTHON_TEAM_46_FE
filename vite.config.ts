@@ -1,10 +1,12 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
+import svgr from "vite-plugin-svgr";
 
-// https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(),
+  plugins: [
+    svgr(),
+    react(),
     VitePWA({
       registerType: "autoUpdate",
       includeAssets: ["icons/favicon.ico", "icons/apple-touch-icon.png"],
@@ -20,21 +22,21 @@ export default defineConfig({
           {
             src: "icons/pwa-192x192.png",
             sizes: "192x192",
-            type: "image/png"
+            type: "image/png",
           },
           {
             src: "icons/pwa-512x512.png",
             sizes: "512x512",
-            type: "image/png"
+            type: "image/png",
           },
-        ]
+        ],
       },
       workbox: {
-        globPatterns: ["**/*.{js,css,html,ico,png,svg}"]
+        globPatterns: ["**/*.{js,css,html,ico,png,svg}"],
       },
       devOptions: {
-        enabled: true 
-      }
-    })
-  ]
-})
+        enabled: true,
+      },
+    }),
+  ],
+});
