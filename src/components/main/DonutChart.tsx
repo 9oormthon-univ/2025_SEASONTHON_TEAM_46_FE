@@ -19,7 +19,7 @@ export function DonutChart({
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (progress / 100) * circumference;
 
-  const angle = (progress / 100) * 360 - 90; // -90도: 시작점 보정
+  const angle = (progress / 100) * 360 - 90;
   const rad = (angle * Math.PI) / 180;
   const x = size / 2 + radius * Math.cos(rad);
   const y = size / 2 + radius * Math.sin(rad);
