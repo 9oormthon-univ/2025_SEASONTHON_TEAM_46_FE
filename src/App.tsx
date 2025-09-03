@@ -6,6 +6,7 @@ import HotPage from "./pages/HotPage";
 import MyPage from "./pages/MyPage";
 import Login from "./pages/Login";
 import CreateAccount from "./pages/CreateAccount";
+import SearchPage from "./pages/SearchPage";
 import Detail from "./pages/Detail";
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
           <Route path="/home" element={<HomePage />} />
           <Route path="/hot" element={<HotPage />} />
           <Route path="/my" element={<MyPage />} />
+          <Route path="/search" element={<SearchPage />} />
         </Routes>
         {showBottomNav && <BottomNav />}
       </div>
