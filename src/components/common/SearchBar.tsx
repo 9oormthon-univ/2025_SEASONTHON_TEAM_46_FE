@@ -18,7 +18,7 @@ export function SearchBar({
   onClick: () => void;
 }) {
   return (
-    <div className="flex h-[56px] w-[337px] items-center gap-[13px] rounded-[50px] bg-[rgba(255,255,255,0.95)] px-[27px]">
+    <div className="flex h-[56px] w-[337px] items-center gap-[13px] rounded-[50px] bg-white/95 px-[27px]">
       <img
         src={SearchSvg}
         alt="Search"
