@@ -1,3 +1,9 @@
+import { Header } from "../components/main/Header";
+
 export default function HomePage() {
-  return <div>🏠 Home 페이지</div>;
+  return (
+    <>
+      <Header />
+    </>
+  );
 }
