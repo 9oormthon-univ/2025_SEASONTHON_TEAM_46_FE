@@ -8,10 +8,9 @@ import { useState } from "react";
 export function NewsDetail() {
   const [isLiked, setIsLiked] = useState(false);
   return (
-    <main className="mt-[14px] flex w-full flex-col items-center bg-white pt-[33px]">
+    <main className="mt-[14px] flex w-full flex-col items-center bg-white pb-[30px] pt-[27px]">
       <article className="flex w-[365px] flex-col items-center gap-[20px]">
         <div className="flex w-[336px] flex-col items-end gap-[20px]">
-          {/* 위에 */}
           <section className="flex flex-col items-start gap-[16px]">
             <div className="flex gap-[3px]">
               <Category text="논란" color="#FF6556" />
@@ -35,7 +34,6 @@ export function NewsDetail() {
               </div>
             </div>
           </section>
-          {/* 요약 */}
           <section>
             <article className="h-auto w-[337px] flex-shrink-0 rounded-[10px] bg-[#FAFAFA] px-[19.5px] pb-[13px] pt-[20px]">
               <div className="flex flex-col gap-[8px]">
@@ -50,7 +48,6 @@ export function NewsDetail() {
               </div>
             </article>
           </section>
-          {/* 본문 */}
           <section className="flex flex-col gap-[15px]">
             <img src={TestPng} alt="이미지" />
             <p className="w-[335px] text-[14px] font-[500] leading-[160%] tracking-[-0.28px] text-[#B3B3B3]">

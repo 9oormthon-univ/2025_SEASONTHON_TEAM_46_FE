@@ -3,6 +3,7 @@ import Header from "../components/common/Header";
 import { NewsDetail } from "../components/detail/NewsDetail";
 import { useNavigate } from "react-router-dom";
 import { useStore } from "../stores/useStore";
+import { HowtoNews } from "../components/detail/HowToNews";
 
 export default function Detail() {
   const setBottomNav: (value: boolean) => void = useStore(
@@ -23,6 +24,7 @@ export default function Detail() {
         }}
       />
       <NewsDetail />
+      <HowtoNews />
     </article>
   );
 }
