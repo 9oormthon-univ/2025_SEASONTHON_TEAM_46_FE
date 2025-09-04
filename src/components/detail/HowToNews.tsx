@@ -1,4 +1,5 @@
 import { NewsImgCard } from "../main/NewsImgCard";
+import { howtoNewsData } from "../../constant/newsImgCardData";
 
 export function HowtoNews() {
   return (
@@ -7,10 +8,11 @@ export function HowtoNews() {
         이런 뉴스도 한 번 봐봐!
       </p>
       <>
-        {/* 주제 */}
-        <NewsImgCard title="이런 주제는 어때?" />
-        {/* 감정 */}
-        <NewsImgCard title="이런 감정은 어때?" />
+        <NewsImgCard topic="이런 주제는 어때?" newsList={howtoNewsData.topic} />
+        <NewsImgCard
+          topic="이런 감정은 어때?"
+          newsList={howtoNewsData.emotion}
+        />
       </>
     </article>
   );
