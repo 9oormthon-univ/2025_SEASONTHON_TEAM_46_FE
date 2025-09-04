@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { Header } from "../components/common/Header";
+
 import { useStore } from "../stores/useStore";
 import { useNavigate } from "react-router-dom";
 import DefaultSvg from "../assets/icons/default_profile.svg";
+import Header from "../components/common/Header";
 
 export default function CreateAccount() {
   const navigate = useNavigate();
@@ -35,7 +36,12 @@ export default function CreateAccount() {
 
   return (
     <article className="flex h-screen flex-col items-center bg-[#FAFAFA] pt-[201px]">
-      <Header text="계정 생성" onClick={() => {}} />
+      <Header
+        title="계정 생성"
+        onBack={() => {
+          navigate(-1);
+        }}
+      />
       <label htmlFor="profile-upload">
         <img
           src={imgSrc}
