@@ -1,4 +1,5 @@
 import { NewsTitle } from "./NewsTitle";
+import { newsList } from "../../constant/newNewsData";
 
 export function NewNews() {
   return (
@@ -9,7 +10,17 @@ export function NewNews() {
           4
         </p>
       </section>
-      <NewsTitle />
+      {newsList.map((news) => (
+        <NewsTitle
+          key={news.id}
+          isImgVisible={true}
+          categories={news.categories}
+          title={news.title}
+          authorImg={news.authorImg}
+          meta={news.meta}
+          thumbnail={news.thumbnail}
+        />
+      ))}
       <button
         className="mt-[22px] flex h-[52px] w-[337px] flex-shrink-0 cursor-pointer items-center justify-center rounded-[10px] bg-[#3D57FE]"
         onClick={() => {}}

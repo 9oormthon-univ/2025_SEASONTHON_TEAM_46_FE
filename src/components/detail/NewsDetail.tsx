@@ -4,6 +4,7 @@ import HeartBlueSvg from "../../assets/icons/heart_blue.svg";
 import ChatSvg from "../../assets/icons/chat.svg";
 import { useState } from "react";
 import { NewsTitle } from "../main/NewsTitle";
+import { newsList } from "../../constant/newNewsData";
 
 export function NewsDetail() {
   const [isLiked, setIsLiked] = useState(false);
@@ -11,7 +12,14 @@ export function NewsDetail() {
     <main className="mt-[14px] flex w-full flex-col items-center bg-white pb-[30px] pt-[27px]">
       <article className="flex w-[365px] flex-col items-center gap-[20px]">
         <div className="flex w-[336px] flex-col items-end gap-[20px]">
-          <NewsTitle isImgVisible={false} />
+          <NewsTitle
+            isImgVisible={false}
+            categories={newsList[0].categories}
+            title={newsList[0].title}
+            authorImg={newsList[0].authorImg}
+            meta={newsList[0].meta}
+            thumbnail={newsList[0].thumbnail}
+          />
           <section>
             <article className="h-auto w-[337px] flex-shrink-0 rounded-[10px] bg-[#FAFAFA] px-[19.5px] pb-[13px] pt-[20px]">
               <div className="flex flex-col gap-[8px]">

@@ -1,30 +1,52 @@
 import { Category } from "../common/Category";
-import TestSvg from "../../assets/images/test_news.png";
 
-export function NewsTitle({ isImgVisible }: { isImgVisible?: boolean }) {
+interface NewsTitleProps {
+  isImgVisible?: boolean;
+  categories: { text: string; color: string }[];
+  title: string;
+  authorImg: string;
+  meta: string;
+  thumbnail?: string;
+}
+
+export function NewsTitle({
+  isImgVisible,
+  categories,
+  title,
+  authorImg,
+  meta,
+  thumbnail,
+}: NewsTitleProps) {
   return (
     <article className="flex flex-col gap-[16px]">
       <section className="flex flex-col gap-[20px]">
-        {isImgVisible && <img src={TestSvg} alt="New News" height={156} />}
+        {isImgVisible && thumbnail && (
+          <img src={thumbnail} alt="뉴스 썸네일" height={156} />
+        )}
         <div className="flex gap-[3px]">
-          <Category text="논란" color="#FF6556" />
-          <Category text="세계" color="#79E2D0" />
+          {categories.map((category) => (
+            <Category
+              key={category.text}
+              text={category.text}
+              color={category.color}
+            />
+          ))}
         </div>
       </section>
       <section className="flex flex-col gap-[8px]">
         <p className="line-clamp-2 text-[20px] font-bold leading-[140%] text-[#2A2A2A]">
-          SK 울산 AI데이터센터 건립…'챗GPT 정신병' 경고등[뉴스잇(IT)쥬]
+          {title}
         </p>
         <div className="flex gap-[4px]">
           <img
-            src={TestSvg}
-            alt="New News"
+            src={authorImg}
+            alt="작성자 프로필"
             height={20}
             width={20}
             className="rounded-[20px]"
           />
           <p className="text-[14px] font-[500] leading-[20px] text-[#979797]">
-            뉴스1 | 김민석 기자 | 2025.08.31
+            {meta}
           </p>
         </div>
       </section>

@@ -1,4 +1,4 @@
-import TestNews from "../../assets/images/test_news2.png";
+import TestNews from "../assets/images/test_news2.png";
 
 export const howtoNewsData = {
   topic: [
