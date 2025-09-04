@@ -1,7 +1,14 @@
 import ActivitySvg from "../../assets/icons/activity.svg";
 import RightArrowSvg from "../../assets/icons/right-arrow.svg";
+import { useNavigate } from "react-router-dom";
 
 export function Activity() {
+  const navigate = useNavigate();
+
+  const handleNavigate = () => {
+    navigate("/news-pick");
+  };
+
   return (
     <article className="full flex h-[122px] w-full bg-white px-[30px] pb-[23px] pt-[28px]">
       <div className="flex w-full flex-col gap-[24px]">
@@ -15,7 +22,14 @@ export function Activity() {
           <p className="text-[16px] font-[500] leading-[140%] text-[#595959]">
             뉴스픽
           </p>
-          <img src={RightArrowSvg} alt="Right Arrow" width={14} height={12} />
+          <img
+            src={RightArrowSvg}
+            alt="Right Arrow"
+            width={14}
+            height={12}
+            className="cursor-pointer"
+            onClick={handleNavigate}
+          />
         </section>
       </div>
     </article>
