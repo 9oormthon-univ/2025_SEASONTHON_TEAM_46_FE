@@ -1,8 +1,8 @@
 import { useEffect } from "react";
-import LogoSvg from "../assets/icons/logo.svg";
-import KakaoSvg from "../assets/icons/kakao.svg";
 import { useStore } from "../stores/useStore";
 import { useNavigate } from "react-router-dom";
+import LogoSvg from "../assets/icons/logo.svg";
+import KakaoSvg from "../assets/icons/kakao.svg";
 
 export default function Login() {
   const navigate = useNavigate();
