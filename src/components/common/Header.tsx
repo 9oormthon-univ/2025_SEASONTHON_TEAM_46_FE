@@ -17,7 +17,7 @@ export default function CommonHeader({
 
   return (
     <header
-      className={`relative h-[95px] w-[394px] shrink-0 overflow-hidden rounded-b-[20px] bg-white px-7 ${className}`}
+      className={`relative h-[95px] w-full shrink-0 overflow-hidden rounded-b-[20px] bg-white px-7 ${className}`}
     >
       {shouldShowBack && (
         <button

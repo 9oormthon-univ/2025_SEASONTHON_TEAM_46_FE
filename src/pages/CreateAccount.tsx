@@ -35,7 +35,7 @@ export default function CreateAccount() {
   };
 
   return (
-    <article className="flex h-screen flex-col items-center bg-[#FAFAFA] pt-[201px]">
+    <article className="flex h-screen flex-col items-center bg-[#FAFAFA]">
       <Header
         title="계정 생성"
         onBack={() => {
@@ -48,7 +48,7 @@ export default function CreateAccount() {
           alt="Default"
           width={117}
           height={117}
-          className="h-[117px] w-[117px] rounded-[50%]"
+          className="mt-[98px] h-[117px] w-[117px] rounded-[50%]"
         />
       </label>
       <input
