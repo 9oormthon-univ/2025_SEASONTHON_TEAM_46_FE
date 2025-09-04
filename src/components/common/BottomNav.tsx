@@ -10,9 +10,9 @@ import MyBlueSvg from "../../assets/icons/my_page_blue_logo.svg";
 
 export function BottomNav() {
   return (
-    <div className="fixed bottom-0 flex h-[90px] w-[393px] justify-around border-t border-gray-200 bg-white">
+    <div className="fixed bottom-0 flex h-[90px] w-full justify-around border-t border-gray-200 bg-white">
       <NavLink
-        to="/"
+        to="/home"
         className="flex flex-1 flex-col items-center justify-center text-[10px] font-semibold"
       >
         {({ isActive }) => (
