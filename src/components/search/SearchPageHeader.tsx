@@ -1,16 +1,41 @@
+import { useState } from "react";
 import SearchBar from "./SearchBar";
 import CategoryTabs, { type CategoryKey } from "./CategoryTabs";
-import { useState } from "react";
 import Header from "../Header";
 
-export default function SearchPageHeader() {
+type Props = {
+  query: string;
+  onQueryChange: (q: string) => void;
+  onSubmit: (q: string) => void;
+  showTabs: boolean;
+  onInputFocus?: () => void;
+  onInputBlur?: () => void;
+  className?: string;
+};
+
+export default function SearchPageHeader({
+  query,
+  onQueryChange,
+  onSubmit,
+  showTabs,
+  onInputFocus,
+  onInputBlur,
+  className = "",
+}: Props) {
   const [cat, setCat] = useState<CategoryKey>("전체");
+
   return (
-    <div className="rounded-b-[20px] bg-white">
+    <div className={`rounded-b-[20px] bg-white ${className}`}>
       <Header title="뉴스 탐색" className="mb-4" />
       <div className="flex flex-col gap-[18px] px-7 pb-[18px]">
-        <SearchBar />
-        <CategoryTabs value={cat} onChange={setCat} />
+        <SearchBar
+          value={query}
+          onChange={onQueryChange}
+          onSubmit={onSubmit}
+          onFocus={onInputFocus}
+          onBlur={onInputBlur}
+        />
+        {showTabs && <CategoryTabs value={cat} onChange={setCat} />}
       </div>
     </div>
   );
