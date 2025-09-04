@@ -6,6 +6,7 @@ import HotPage from "./pages/HotPage";
 import MyPage from "./pages/MyPage";
 import Login from "./pages/Login";
 import CreateAccount from "./pages/CreateAccount";
+import Detail from "./pages/Detail";
 
 function App() {
   const showBottomNav: boolean = useStore((state) => state.showBottomNav);
@@ -15,6 +16,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/create-account" element={<CreateAccount />} />
+          <Route path="/news/detail" element={<Detail />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/hot" element={<HotPage />} />
           <Route path="/my" element={<MyPage />} />
