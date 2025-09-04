@@ -11,7 +11,7 @@ function App() {
   const showBottomNav: boolean = useStore((state) => state.showBottomNav);
   return (
     <BrowserRouter>
-      <div className="relative mx-auto min-h-screen w-[393px]">
+      <div className="relative mx-auto min-h-screen w-dvw">
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/create-account" element={<CreateAccount />} />
