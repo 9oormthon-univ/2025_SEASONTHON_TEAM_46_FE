@@ -1,7 +1,7 @@
 import { useState } from "react";
 import SearchBar from "./SearchBar";
 import CategoryTabs, { type CategoryKey } from "./CategoryTabs";
-import Header from "../Header";
+import Header from "../common/Header";
 
 type Props = {
   query: string;

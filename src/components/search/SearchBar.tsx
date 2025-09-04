@@ -33,7 +33,7 @@ export default function SearchBar({
 
   return (
     <div
-      className={`flex h-[56px] items-center gap-[13px] rounded-[50px] bg-[#FAFAFA] px-[27px] ${className}`}
+      className={`mx-auto flex h-[56px] w-[337px] items-center gap-[13px] rounded-[50px] bg-[#FAFAFA] px-[27px] ${className}`}
     >
       <button
         type="button"

@@ -64,17 +64,19 @@ export default function CategoryTabs({
     <div className={`relative ${className}`}>
       <div
         ref={scrollerRef}
-        className="no-scrollbar flex w-full cursor-grab snap-x flex-nowrap items-center gap-[9px] overflow-x-auto overscroll-x-contain scroll-smooth px-3 [-webkit-overflow-scrolling:touch] [touch-action:pan-x] active:cursor-grabbing"
+        className="no-scrollbar w-full cursor-grab snap-x overflow-x-auto overscroll-x-contain px-3 [-webkit-overflow-scrolling:touch] [touch-action:pan-x] active:cursor-grabbing"
       >
-        {CATEGORIES.map((c) => (
-          <div key={c} className="flex-shrink-0 snap-start">
-            <CategoryPill
-              label={c}
-              selected={selected === c}
-              onClick={() => handleSelect(c)}
-            />
-          </div>
-        ))}
+        <div className="mx-auto flex w-max items-center gap-[9px]">
+          {CATEGORIES.map((c) => (
+            <div key={c} className="flex-shrink-0 snap-start">
+              <CategoryPill
+                label={c}
+                selected={selected === c}
+                onClick={() => handleSelect(c)}
+              />
+            </div>
+          ))}
+        </div>
       </div>
 
       {showRightFade && (
