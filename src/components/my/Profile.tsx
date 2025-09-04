@@ -4,7 +4,7 @@ export function Profile({ imgSrc, name, email, role }: ProfileProps) {
   return (
     <article className="flex h-[129px] w-full items-center justify-center gap-[18px]">
       <img src={imgSrc} alt="Default Profile" width={62} height={62} />
-      <div className="flex flex-col items-start">
+      <div className="flex w-[190px] flex-col items-start">
         <div className="flex items-center gap-[6px]">
           <p className="text-[22px] font-[700] leading-[140%] text-[#2A2A2A]">
             {name}
@@ -20,7 +20,7 @@ export function Profile({ imgSrc, name, email, role }: ProfileProps) {
             </p>
           </div>
         </div>
-        <p className="w-[190] truncate text-[12px] font-[500] leading-[140%] text-[#979797]">
+        <p className="truncate text-[12px] font-[500] leading-[140%] text-[#979797]">
           {email}
         </p>
       </div>
