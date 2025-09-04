@@ -1,5 +1,3 @@
-import { Category } from "../common/Category";
-
 /**
  * NewsImgCard component
  * @param topic - The topic to display above the news image cards
@@ -9,13 +7,8 @@ import { Category } from "../common/Category";
  * @returns {JSX.Element}
  */
 
-interface NewsItem {
-  id: number;
-  title: string;
-  content: string;
-  imgSrc: string;
-  categories: { text: string; color: string }[];
-}
+import { Category } from "../common/Category";
+import type { NewsItem } from "../../types/NewsItem";
 
 export function NewsImgCard({
   topic,

@@ -1,13 +1,16 @@
-import { Category } from "../common/Category";
+/**
+ * NewsTitle component
+ * @param isImgVisible - Whether the thumbnail image is visible
+ * @param categories - Array of category objects
+ * @param title - Title of the news article
+ * @param authorImg - Author's profile image
+ * @param meta - Metadata information (e.g., date, time)
+ * @param thumbnail - Thumbnail image for the news article
+ * @return {JSX.Element}
+ */
 
-interface NewsTitleProps {
-  isImgVisible?: boolean;
-  categories: { text: string; color: string }[];
-  title: string;
-  authorImg: string;
-  meta: string;
-  thumbnail?: string;
-}
+import { Category } from "../common/Category";
+import type { NewsTitleProps } from "../../types/NewsTitleProps";
 
 export function NewsTitle({
   isImgVisible,

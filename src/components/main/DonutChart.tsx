@@ -1,11 +1,15 @@
-interface DonutChartProps {
-  size?: number;
-  strokeWidth?: number;
-  progress: number;
-  color?: string;
-  trackColor?: string;
-  children?: React.ReactNode;
-}
+/**
+ * Props for the DonutChart component
+ * @param size - Size of the donut chart
+ * @param strokeWidth - Width of the donut chart stroke
+ * @param progress - Progress percentage of the donut chart
+ * @param color - Color of the donut chart
+ * @param trackColor - Color of the donut chart track
+ * @param children - Child elements to be rendered inside the donut chart
+ * @returns {JSX.Element}
+ */
+
+import type { DonutChartProps } from "../../types/DonutChartProps";
 
 export function DonutChart({
   size = 100,
