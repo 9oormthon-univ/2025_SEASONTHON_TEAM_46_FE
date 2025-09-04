@@ -1,13 +1,9 @@
-import Header from "../components/Header";
-import SearchBar from "../components/search/SearchBar";
+import SearchPageHeader from "../components/search/SearchPageHeader";
 
 export default function SearchPage() {
   return (
     <div>
-      <Header title="뉴스 탐색" />
-      <div className="px-7">
-        <SearchBar />
-      </div>
+      <SearchPageHeader />
     </div>
   );
 }
