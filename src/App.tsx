@@ -5,6 +5,7 @@ import HomePage from "./pages/HomePage";
 import HotPage from "./pages/HotPage";
 import MyPage from "./pages/MyPage";
 import Login from "./pages/Login";
+import CreateAccount from "./pages/CreateAccount";
 
 function App() {
   const showBottomNav: boolean = useStore((state) => state.showBottomNav);
@@ -13,6 +14,7 @@ function App() {
       <div className="relative mx-auto min-h-screen w-[393px]">
         <Routes>
           <Route path="/" element={<Login />} />
+          <Route path="/create-account" element={<CreateAccount />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/hot" element={<HotPage />} />
           <Route path="/my" element={<MyPage />} />
