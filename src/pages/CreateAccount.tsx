@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-
 import { useStore } from "../stores/useStore";
 import { useNavigate } from "react-router-dom";
 import DefaultSvg from "../assets/icons/default_profile.svg";
