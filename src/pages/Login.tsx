@@ -1,11 +1,9 @@
 import { useEffect } from "react";
 import { useStore } from "../stores/useStore";
-import { useNavigate } from "react-router-dom";
 import LogoSvg from "../assets/icons/logo.svg";
 import KakaoSvg from "../assets/icons/kakao.svg";
 
 export default function Login() {
-  const navigate = useNavigate();
   const setBottomNav: (value: boolean) => void = useStore(
     (state) => state.setBottomNav,
   );
@@ -37,7 +35,7 @@ export default function Login() {
         <button
           className="flex h-[60px] w-[336px] flex-shrink-0 items-center justify-center gap-[7px] rounded-[10px] bg-[#FEE500]"
           onClick={() => {
-            navigate("/create-account");
+            window.location.href = `${import.meta.env.VITE_API_URL}/oauth2/authorization/kakao`;
           }}
         >
           <img src={KakaoSvg} alt="Kakao" width={22} height={16} />
