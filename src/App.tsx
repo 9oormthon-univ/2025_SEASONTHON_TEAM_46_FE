@@ -9,6 +9,7 @@ import CreateAccount from "./pages/CreateAccount";
 import SearchPage from "./pages/SearchPage";
 import Detail from "./pages/Detail";
 import NewsPick from "./pages/NewsPick";
+import ReportPage from "./pages/ReportPage";
 
 function App() {
   const showBottomNav: boolean = useStore((state) => state.showBottomNav);
@@ -24,6 +25,7 @@ function App() {
           <Route path="/my" element={<MyPage />} />
           <Route path="/news-pick" element={<NewsPick />} />
           <Route path="/search" element={<SearchPage />} />
+          <Route path="/report" element={<ReportPage />} />
         </Routes>
         {showBottomNav && <BottomNav />}
       </div>
