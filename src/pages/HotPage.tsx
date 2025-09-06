@@ -5,6 +5,7 @@ import hotNews1 from "../assets/images/hot_news1.png";
 
 import type { HotNewsRes } from "../types/hot";
 import { fetchHotNewsList } from "../api/hot/getHotNewsList";
+import { Link } from "react-router-dom";
 
 type Badge = { text: string; color: string; bgColor: string };
 type CardItem = {
@@ -30,16 +31,20 @@ export default function HotPage() {
           id: d.id,
           rank: idx + 1,
           title: d.title,
-          desc: `${d.outlet} · ❤️ ${d.likeCount.toLocaleString()}`,
+          desc: d.outlet,
           categories: [
-            { text: d.outlet, color: "#7F81FF", bgColor: "#EEF0FF" },
             {
-              text: d.orientation || "NEWS",
+              text: "성취",
+              color: "#38D1B8",
+              bgColor: "#7BEAD742",
+            },
+            {
+              text: "IT",
               color: "#979797",
               bgColor: "#ECECEC",
             },
           ],
-          thumbnail: hotNews1,
+          thumbnail: d.image || hotNews1,
         }));
 
         setItems(mapped);
@@ -58,22 +63,23 @@ export default function HotPage() {
   }, []);
 
   return (
-    <div className="bg-[#FAFAFA]">
+    <div className="min-h-dvh bg-[#FAFAFA]">
       <Header title="이번주 핫뉴스 TOP 10" />
-      <div className="relative flex w-full flex-col items-center pb-[90px] pt-9">
-        <div className="flex w-[394px] flex-col items-center gap-[25px]">
+      <div className="pb-[91px relative flex w-full flex-col items-center pt-9">
+        <div className="flex w-[393px] flex-col items-center gap-[25px]">
           {loading && <div>불러오는 중…</div>}
           {err && <div className="text-red-500">{err}</div>}
 
           {items.map((it) => (
-            <HotNewsCard
-              key={it.id}
-              rank={it.rank}
-              title={it.title}
-              desc={it.desc}
-              categories={it.categories}
-              thumbnail={it.thumbnail}
-            />
+            <Link key={it.id} to={`/news/detail/${it.id}`} className="block">
+              <HotNewsCard
+                rank={it.rank}
+                title={it.title}
+                desc={it.desc}
+                categories={it.categories}
+                thumbnail={it.thumbnail}
+              />
+            </Link>
           ))}
         </div>
 

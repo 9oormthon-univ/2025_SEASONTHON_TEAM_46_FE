@@ -4,4 +4,5 @@ export type HotNewsRes = {
   title: string;
   orientation: string;
   likeCount: number;
+  image?: string;
 };
