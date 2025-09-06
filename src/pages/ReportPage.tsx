@@ -17,15 +17,19 @@ import question from "../assets/icons/question.svg";
 
 import { getSentiment } from "../api/report/getSentiment";
 import { getEmotion } from "../api/report/getEmotionAnalysis";
+import type { CategoryAnalysis } from "../types/CategoryAnalysis";
+import { getCategoryAnalysis } from "../api/report/getCategoryAnalysis";
+import { getSentimentPercentage } from "../api/report/getSentimentAnalysis";
+import type { SentimentPercentageItem } from "../types/SentimentAnalysis";
 
-const ringSegments: Segment[] = [
-  { label: "희망", color: "#7BEAD7", value: 25 },
-  { label: "재미", color: "#B5F6EB", value: 15 },
-  { label: "분노", color: "#FF7676", value: 20 },
-  { label: "불안", color: "#FFB3B3", value: 15 },
-  { label: "슬픔", color: "#9FA0A3", value: 10 },
-  { label: "중립", color: "#D9D9D9", value: 15 },
-];
+// const ringSegments: Segment[] = [
+//   { label: "희망", color: "#7BEAD7", value: 25 },
+//   { label: "재미", color: "#B5F6EB", value: 15 },
+//   { label: "분노", color: "#FF7676", value: 20 },
+//   { label: "불안", color: "#FFB3B3", value: 15 },
+//   { label: "슬픔", color: "#9FA0A3", value: 10 },
+//   { label: "중립", color: "#D9D9D9", value: 15 },
+// ];
 
 type EmotionItem = {
   code: "POSITIVE" | "NEGATIVE" | "NEUTRAL" | string;
@@ -43,26 +47,42 @@ export default function ReportPage() {
   const [neutral, setNeutral] = useState(0);
   const total = positive + negative + neutral;
 
+  const [categoryItems, setCategoryItems] = useState<
+    { name: string; value: number }[]
+  >([]);
+
+  const [ringSegments, setRingSegments] = useState<Segment[]>([]);
+
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState<string | null>(null);
 
   useEffect(() => {
     (async () => {
       try {
-        const [summary, emotionList] = await Promise.all([
-          getSentiment(),
-          getEmotion(),
-        ]);
+        const [summary, emotionList, categoryObj, sentimentPctList] =
+          await Promise.all([
+            getSentiment(),
+            getEmotion(),
+            getCategoryAnalysis(),
+            getSentimentPercentage(),
+          ]);
 
+        // SummaryBar
         const nextLines = summary.includes("\n")
           ? summary.split("\n").filter(Boolean)
           : [summary];
         setLines(nextLines);
 
+        // NewsSentimentBar
         const { pos, neg, neu } = countEmotion(emotionList);
         setPositive(pos);
         setNegative(neg);
         setNeutral(neu);
+
+        // CategoryCharts
+        setCategoryItems(toCategoryItems(categoryObj));
+
+        setRingSegments(mapRingSegments(sentimentPctList));
       } catch (e: unknown) {
         let message = "데이터를 불러오지 못했습니다.";
         if (axios.isAxiosError(e)) {
@@ -102,7 +122,7 @@ export default function ReportPage() {
 
         <div className="relative mt-[33px] w-[340px]">
           <EmotionChart
-            segments={ringSegments}
+            segments={ringSegments.length ? ringSegments : getFallbackRing()}
             width={340}
             strokeWidth={18}
             gap={12}
@@ -159,7 +179,7 @@ export default function ReportPage() {
             <p className="text-lg font-bold text-[#2A2A2A]">
               카테고리 별 뉴스 소비
             </p>
-            <CategoryCharts />
+            <CategoryCharts items={categoryItems} />
           </div>
 
           {loading ? (
@@ -204,4 +224,78 @@ function countEmotion(list: EmotionItem[]) {
     }
   }
   return { pos, neg, neu };
+}
+function toCategoryItems(
+  obj: CategoryAnalysis,
+): { name: string; value: number }[] {
+  if (!obj || typeof obj !== "object") return [];
+  const entries = Object.entries(obj) as [string, number][];
+  const total = entries.reduce(
+    (acc, [, v]) => acc + (Number.isFinite(v) ? v : 0),
+    0,
+  );
+
+  if (total <= 0) {
+    return entries.map(([k]) => ({ name: mapCategoryName(k), value: 0 }));
+  }
+  return entries.map(([k, v]) => ({
+    name: mapCategoryName(k),
+    value: Math.round(((Number(v) || 0) / total) * 100),
+  }));
+
+  // .sort((a, b) => b.value - a.value)
+}
+function mapCategoryName(key: string): string {
+  const k = (key || "").toLowerCase();
+  const map: Record<string, string> = {
+    politics: "정치",
+    world: "세계",
+    it: "IT",
+    tech: "IT",
+    lifestyle: "생활",
+    life: "생활",
+    society: "사회",
+  };
+
+  const isKorean = /[가-힣]/.test(key);
+  return isKorean ? key : (map[k] ?? key);
+}
+
+function mapRingSegments(list: SentimentPercentageItem[]): Segment[] {
+  const palette: Record<string, { label: string; color: string }> = {
+    HOPE: { label: "희망", color: "#7BEAD7" },
+    FUN: { label: "재미", color: "#B5F6EB" },
+    ANGER: { label: "분노", color: "#FF7676" },
+    ANXIETY: { label: "불안", color: "#FFB3B3" },
+    SADNESS: { label: "슬픔", color: "#9FA0A3" },
+    NEUTRAL: { label: "중립", color: "#D9D9D9" },
+  };
+
+  const clamp = (n: number) => {
+    const v = Number.isFinite(n) ? n : 0;
+    return Math.max(0, Math.min(100, Math.round(v)));
+  };
+
+  const segments: Segment[] = [];
+
+  for (const item of list ?? []) {
+    const key = (item.code || "").toUpperCase();
+    const meta = palette[key];
+    if (!meta) continue;
+    segments.push({
+      label: meta.label,
+      color: meta.color,
+      value: clamp(item.percentage),
+    });
+  }
+
+  if (!segments.length || segments.every((s) => s.value === 0)) {
+    return [{ label: "중립", color: "#D9D9D9", value: 100 }];
+  }
+
+  return segments;
+}
+
+function getFallbackRing(): Segment[] {
+  return [{ label: "중립", color: "#D9D9D9", value: 100 }];
 }
