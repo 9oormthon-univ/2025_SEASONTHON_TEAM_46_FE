@@ -137,27 +137,10 @@ export default function EmotionToastSheet({ open, emotion, onClose }: Props) {
 
           <div className="mx-7 mt-[25px] flex items-center gap-3 rounded-[14px] bg-[#F9F9F9] p-4">
             <HotNewsCard
-<<<<<<< HEAD
               title={cardTitle}
               desc={cardDesc}
               categories={cardCats}
               thumbnail={cardThumb}
-=======
-              title="‘케데헌’ 열풍 이정도야?… 외국인 136만명 서울 몰려왔다"
-              desc="[이데일리 함지현 기자] 서울시는 7월 ..."
-              categories={[
-                meta
-                  ? {
-                      text: meta.subs[0] ?? "성취",
-                      color: meta.color,
-                      bgColor: meta.bgColor,
-                    }
-                  : { text: "성취", color: "#38D1B8", bgColor: "#7BEAD742" },
-
-                { text: "사회", color: "#979797", bgColor: "#ECECEC" },
-              ]}
-              thumbnail={hotNewsThumb}
->>>>>>> df12d01 (fix: 바텀시트 카테고리 수정)
               className="w-full"
             />
           </div>

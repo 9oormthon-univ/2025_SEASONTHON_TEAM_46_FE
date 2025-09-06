@@ -5,14 +5,8 @@ import hotNews1 from "../assets/images/hot_news1.png";
 
 import type { HotNewsRes } from "../types/hot";
 import { fetchHotNewsList } from "../api/hot/getHotNewsList";
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 import { Link } from "react-router-dom";
-=======
->>>>>>> 6d299c5 (feat: hot 뉴스 불러오기 api 연동)
-=======
-import { Link } from "react-router-dom";
->>>>>>> ff1f9bd (fix: hot 뉴스 연동 api 수정)
 
 type Badge = { text: string; color: string; bgColor: string };
 type CardItem = {
@@ -33,56 +27,6 @@ export default function HotPage() {
     (async () => {
       try {
         const list: HotNewsRes[] = await fetchHotNewsList();
-<<<<<<< HEAD
-        console.log(list);
-        const mapped: CardItem[] = list.map((d, idx) => ({
-          id: d.id,
-          rank: idx + 1,
-          title: d.title,
-<<<<<<< HEAD
-<<<<<<< HEAD
-          desc: d.outlet,
-          categories: [
-            {
-              text: "성취",
-              color: "#38D1B8",
-              bgColor: "#7BEAD742",
-            },
-            {
-              text: "IT",
-=======
-          desc: `${d.outlet} · ❤️ ${d.likeCount.toLocaleString()}`,
-=======
-          desc: d.outlet,
->>>>>>> ff1f9bd (fix: hot 뉴스 연동 api 수정)
-          categories: [
-            {
-<<<<<<< HEAD
-              text: d.orientation || "NEWS",
->>>>>>> 6d299c5 (feat: hot 뉴스 불러오기 api 연동)
-=======
-              text: "성취",
-              color: "#38D1B8",
-              bgColor: "#7BEAD742",
-            },
-            {
-              text: "IT",
->>>>>>> ff1f9bd (fix: hot 뉴스 연동 api 수정)
-              color: "#979797",
-              bgColor: "#ECECEC",
-            },
-          ],
-<<<<<<< HEAD
-<<<<<<< HEAD
-          thumbnail: d.image || hotNews1,
-=======
-          thumbnail: hotNews1,
->>>>>>> 6d299c5 (feat: hot 뉴스 불러오기 api 연동)
-=======
-          thumbnail: d.image || hotNews1,
->>>>>>> ff1f9bd (fix: hot 뉴스 연동 api 수정)
-        }));
-=======
         const mapped: CardItem[] = list.map((d, idx) => {
           const cat = d.categoryMeta;
           const catBadge: Badge = {
@@ -100,8 +44,6 @@ export default function HotPage() {
             thumbnail: d.image || hotNews1,
           };
         });
->>>>>>> 66e3b2c (fix: 카테고리 수정)
-
         setItems(mapped);
       } catch (err: unknown) {
         let message = "핫뉴스 목록을 불러오지 못했습니다.";
@@ -117,39 +59,28 @@ export default function HotPage() {
   return (
     <div className="min-h-dvh bg-[#FAFAFA]">
       <Header title="이번주 핫뉴스 TOP 10" />
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      <div className="pb-[91px relative flex w-full flex-col items-center pt-9">
-=======
+
       <div className="relative flex w-full flex-col items-center pb-[91px] pt-9">
->>>>>>> 66e3b2c (fix: 카테고리 수정)
-        <div className="flex w-[393px] flex-col items-center gap-[25px]">
-=======
-      <div className="relative flex w-full flex-col items-center pb-[90px] pt-9">
-        <div className="flex w-[394px] flex-col items-center gap-[25px]">
->>>>>>> 6d299c5 (feat: hot 뉴스 불러오기 api 연동)
-=======
-      <div className="pb-[91px relative flex w-full flex-col items-center pt-9">
-        <div className="flex w-[393px] flex-col items-center gap-[25px]">
->>>>>>> ff1f9bd (fix: hot 뉴스 연동 api 수정)
-          {loading && <div>불러오는 중…</div>}
-          {err && <div className="text-red-500">{err}</div>}
+        <div className="relative flex w-full flex-col items-center pb-[91px] pt-9">
+          <div className="flex w-[393px] flex-col items-center gap-[25px]">
+            {loading && <div>불러오는 중…</div>}
+            {err && <div className="text-red-500">{err}</div>}
 
-          {items.map((it) => (
-            <Link key={it.id} to={`/news/detail/${it.id}`} className="block">
-              <HotNewsCard
-                rank={it.rank}
-                title={it.title}
-                desc={it.desc}
-                categories={it.categories}
-                thumbnail={it.thumbnail}
-              />
-            </Link>
-          ))}
+            {items.map((it) => (
+              <Link key={it.id} to={`/news/detail/${it.id}`} className="block">
+                <HotNewsCard
+                  rank={it.rank}
+                  title={it.title}
+                  desc={it.desc}
+                  categories={it.categories}
+                  thumbnail={it.thumbnail}
+                />
+              </Link>
+            ))}
+          </div>
+
+          <div className="pointer-events-none fixed bottom-[90px] left-1/2 h-[72px] w-[394px] -translate-x-1/2 bg-gradient-to-b from-transparent to-[#FAFAFA]" />
         </div>
-
-        <div className="pointer-events-none fixed bottom-[90px] left-1/2 h-[72px] w-[394px] -translate-x-1/2 bg-gradient-to-b from-transparent to-[#FAFAFA]" />
       </div>
     </div>
   );
