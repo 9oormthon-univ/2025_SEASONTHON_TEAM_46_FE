@@ -83,19 +83,7 @@ define(["./workbox-86c9b217"], function (workbox) {
     [
       {
         url: "index.html",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        revision: "0.6gdp4jtl71",
-=======
-        revision: "0.sv24s4ujml8",
->>>>>>> ae7cb90 (feat: 뉴스 소비 수, 요약 api 연동)
-=======
-        revision: "0.eus4k3r8b1",
->>>>>>> 77099a9 (feat: 차트 api 연동)
-=======
-        revision: "0.t05k8lqib8",
->>>>>>> c9c57ca (fix: emotion chart api 연동 테스트)
+        revision: "0.k26ojflgndg",
       },
     ],
     {},
