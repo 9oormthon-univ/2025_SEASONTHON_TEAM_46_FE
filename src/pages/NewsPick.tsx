@@ -8,7 +8,7 @@ type Item = {
   id: number;
   title: string;
   desc: string;
-  categories: { text: string; color: string }[];
+  categories: { text: string; color: string; bgColor: string }[];
   thumbnail: string;
 };
 
@@ -16,8 +16,8 @@ const baseItem: Omit<Item, "id"> = {
   title: "오픈 ai, 해외 데이터 센터 구축속도.. 인도서 파트너 물색",
   desc: "(샌프란시스코=연합뉴스) 김태종...",
   categories: [
-    { text: "성취", color: "#79E2D0" },
-    { text: "IT", color: "#EAEAEA" },
+    { text: "성취", color: "#38D1B8", bgColor: "#79E2D0" },
+    { text: "IT", color: "#979797", bgColor: "#E0E0E0" },
   ],
   thumbnail: hotNews1,
 };

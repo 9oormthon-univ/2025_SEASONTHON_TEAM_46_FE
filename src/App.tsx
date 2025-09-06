@@ -9,6 +9,7 @@ import CreateAccount from "./pages/CreateAccount";
 import SearchPage from "./pages/SearchPage";
 import Detail from "./pages/Detail";
 import NewsPick from "./pages/NewsPick";
+import LoginCallback from "./pages/LoginCallback";
 import ReportPage from "./pages/ReportPage";
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route path="/home" element={<HomePage />} />
           <Route path="/hot" element={<HotPage />} />
           <Route path="/my" element={<MyPage />} />
+          <Route path="/login/callback" element={<LoginCallback />} />
           <Route path="/news-pick" element={<NewsPick />} />
           <Route path="/search" element={<SearchPage />} />
           <Route path="/report" element={<ReportPage />} />
