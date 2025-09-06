@@ -6,11 +6,17 @@ export function NewsCard({
   id,
   title,
   categories,
+  sentiment,
   img,
   content,
 }: {
   id: number;
   categories: {
+    text: string | null;
+    color: string | null;
+    bgColor: string | null;
+  };
+  sentiment?: {
     text: string | null;
     color: string | null;
     bgColor: string | null;
@@ -34,6 +40,11 @@ export function NewsCard({
       />
       <div className="absolute bottom-0 left-0 right-0 top-0 rounded-[10px] bg-black/60 pl-[15px] pt-[13px]">
         <section className="flex gap-[3px]">
+          <Category
+            text={sentiment?.text || ""}
+            textColor={sentiment?.color || ""}
+            bgColor={sentiment?.bgColor || ""}
+          />
           <Category
             text={categories.text || ""}
             textColor={categories.color || ""}

@@ -8,4 +8,9 @@ export interface NewsItem {
     color: string | null;
     bgColor: string | null;
   };
+  sentiment?: {
+    text: string | null;
+    color: string | null;
+    bgColor: string | null;
+  };
 }

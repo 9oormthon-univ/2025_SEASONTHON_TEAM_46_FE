@@ -23,14 +23,14 @@ export function NewNews({ data }: NewNewsProps) {
           isImgVisible={true}
           categories={[
             {
-              text: "논란",
-              color: "#FF0000",
-              bgColor: "rgba(255, 118, 118, 0.26)",
+              text: news.sentimentMeta.text || "",
+              color: news.sentimentMeta.color || "",
+              bgColor: news.sentimentMeta.bgColor || "",
             },
             {
-              text: "IT",
-              color: "#797979",
-              bgColor: "#F2F2F2",
+              text: news.categoryMeta.text || "",
+              color: news.categoryMeta.color || "",
+              bgColor: news.categoryMeta.bgColor || "",
             },
           ]}
           title={news.title}

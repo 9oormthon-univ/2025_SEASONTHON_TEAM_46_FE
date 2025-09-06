@@ -28,6 +28,7 @@ export function HotNews({ data }: HotNewsProps) {
             <NewsCard
               id={data.id}
               categories={data.categoryMeta}
+              sentiment={data.sentimentMeta}
               title={data.title}
               img={data.thumbnail}
               content={data.summary}
