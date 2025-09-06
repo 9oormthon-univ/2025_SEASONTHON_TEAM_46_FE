@@ -37,7 +37,7 @@ function mapToNewsImgCardData(data: DataProps[]) {
     title: item.title,
     content: item.summary,
     imgSrc: item.thumbnail || DefaultImg,
-    categories: item.categoryMeta,
+    category: item.categoryMeta,
     sentiment: item.sentimentMeta,
   }));
 }
