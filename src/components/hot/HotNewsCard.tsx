@@ -4,7 +4,7 @@ type HotNewsCardProps = {
   rank?: number;
   title: string;
   desc: string;
-  categories: { text: string; color: string }[];
+  categories: { text: string; color: string; bgColor: string }[];
   thumbnail: string;
   className?: string;
 };
@@ -30,7 +30,12 @@ export default function HotNewsCard({
         <div className={`min-w-0 flex-1 ${gridClass}`}>
           <div className={`${colForCats} row-start-1 mb-[10px] flex gap-[3px]`}>
             {categories.map((c, i) => (
-              <Category key={`${c.text}-${i}`} text={c.text} color={c.color} />
+              <Category
+                key={`${c.text}-${i}`}
+                text={c.text}
+                textColor={c.color}
+                bgColor={c.bgColor}
+              />
             ))}
           </div>
 

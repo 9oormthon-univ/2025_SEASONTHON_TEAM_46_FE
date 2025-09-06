@@ -31,7 +31,8 @@ export function NewsTitle({
             <Category
               key={category.text}
               text={category.text}
-              color={category.color}
+              textColor={category.color}
+              bgColor={category.bgColor}
             />
           ))}
         </div>
