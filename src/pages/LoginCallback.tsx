@@ -24,11 +24,11 @@ export default function LoginCallback() {
         })
         .catch(() => {
           alert("로그인 실패. 다시 시도해주세요.");
-          navigate("/login");
+          navigate("/");
         });
     } else {
       alert("토큰이 존재하지 않습니다.");
-      navigate("/login");
+      navigate("/");
     }
   }, [location, navigate]);
 
