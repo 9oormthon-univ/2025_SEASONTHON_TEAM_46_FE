@@ -2,6 +2,7 @@ export type HotNewsRes = {
   id: number;
   outlet: string;
   title: string;
+
   likeCount: number;
 
   summary?: string;
@@ -14,4 +15,5 @@ export type HotNewsRes = {
     color?: string;
     bgColor?: string;
   };
+
 };
