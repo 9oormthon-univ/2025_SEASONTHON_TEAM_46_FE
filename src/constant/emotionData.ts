@@ -10,7 +10,7 @@ export const EMOTION_META: Record<
     bgColor: "#7BEAD742",
   },
   재미: {
-    color: "#7BEAD7",
+    color: "#38D1B8",
     subs: ["즐거움", "흥미", "웃음", "연예"],
     bgColor: "#7BEAD742",
   },
@@ -25,9 +25,9 @@ export const EMOTION_META: Record<
     bgColor: "#FF767642",
   },
   슬픔: {
-    color: "#979797",
+    color: "#505050",
     subs: ["재난", "사고", "패배", "충격"],
-    bgColor: "#ECECEC",
+    bgColor: "#F2F2F2",
   },
-  중립: { color: "#979797", subs: ["객관", "정보"], bgColor: "#ECECEC" },
+  중립: { color: "#505050", subs: ["객관", "정보"], bgColor: "#F2F2F2" },
 };

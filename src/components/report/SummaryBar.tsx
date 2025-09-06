@@ -7,7 +7,7 @@ export default function SummaryBar({ lines, className = "" }: SummaryBarProps) {
   return (
     <div
       className={[
-        "h-[98px] w-[337px] flex-shrink-0 rounded-[10px] bg-[#F9F9F9]",
+        "h-auto w-[337px] flex-shrink-0 rounded-[10px] bg-[#F9F9F9]",
         "px-[19px] pb-4 pt-[14px]",
         className,
       ].join(" ")}

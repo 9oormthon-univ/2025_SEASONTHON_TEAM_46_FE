@@ -8,9 +8,9 @@ type Props = {
 };
 
 export default function NewsSentimentBar({
-  positive = 15,
-  negative = 22,
-  neutral = 5,
+  positive = 0,
+  negative = 0,
+  neutral = 0,
   className = "",
 }: Props) {
   return (
@@ -18,11 +18,26 @@ export default function NewsSentimentBar({
       className={`h-20 w-[337px] flex-shrink-0 rounded-[10px] bg-[#FAFAFA] px-[33px] ${className}`}
     >
       <div className="flex h-full items-center justify-between">
-        <SentimentCell label="긍정" value={positive} color="#7BEAD7" />
+        <SentimentCell
+          label="긍정"
+          value={positive}
+          textColor="#38D1B8"
+          bgColor="#E6FBF7"
+        />
         <Divider />
-        <SentimentCell label="부정" value={negative} color="#FF7676" />
+        <SentimentCell
+          label="부정"
+          value={negative}
+          textColor="#FF7676"
+          bgColor="#FFE7E7"
+        />
         <Divider />
-        <SentimentCell label="중립" value={neutral} color="#F2F2F2" />
+        <SentimentCell
+          label="중립"
+          value={neutral}
+          textColor="#9FA0A3"
+          bgColor="#F2F2F2"
+        />
       </div>
     </div>
   );
@@ -37,18 +52,26 @@ function Divider() {
   );
 }
 
+type SentimentCellProps = {
+  label: string;
+  value?: number;
+  textColor: string;
+  bgColor?: string;
+};
+
 function SentimentCell({
   label,
-  value,
-  color,
-}: {
-  label: string;
-  value: number;
-  color: string;
-}) {
+  value = 0,
+  textColor,
+  bgColor,
+}: SentimentCellProps) {
   return (
     <div className="flex flex-col items-center justify-center gap-1">
-      <Category text={label} color={color} />
+      <Category
+        text={label}
+        textColor={textColor}
+        bgColor={bgColor ?? "#EEF0FF"}
+      />
       <p className="text-xl font-bold text-[#595959]">{value}</p>
     </div>
   );
