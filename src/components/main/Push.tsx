@@ -10,6 +10,7 @@ export function Push({ text }: { text: string }) {
   useEffect(() => {
     api.get("/api/news/1/recommendation/opposing-emotion").then((res) => {
       setCategoryNews(res.data);
+      console.log(res.data, "1");
     });
     api.get("/api/news/3/recommendation/opposing-emotion").then((res) => {
       setEmotionNews(res.data);
@@ -37,8 +38,6 @@ function mapToNewsImgCardData(data: DataProps[]) {
     title: item.title,
     content: item.summary,
     imgSrc: item.thumbnail || DefaultImg,
-    categories: item.category
-      ? [{ text: item.category, color: "#7F81FF" }]
-      : [],
+    categories: item.categoryMeta,
   }));
 }

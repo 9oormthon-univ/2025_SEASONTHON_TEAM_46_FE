@@ -22,11 +22,12 @@ export function HotNews({ data }: HotNewsProps) {
         </p>
       </div>
 
-      <div className="flex w-full flex-nowrap items-center gap-[8px] overflow-x-auto">
+      <div className="no-scrollbar flex w-full flex-nowrap items-center gap-[8px] overflow-x-auto">
         {data.slice(0, 5).map((data, index) => (
           <div key={index} className="flex-shrink-0 cursor-pointer">
             <NewsCard
               id={data.id}
+              categories={data.categoryMeta}
               title={data.title}
               img={data.thumbnail}
               content={data.summary}

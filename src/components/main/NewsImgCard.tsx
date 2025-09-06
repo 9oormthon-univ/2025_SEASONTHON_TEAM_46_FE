@@ -38,11 +38,10 @@ export function NewsImgCard({
               <div className="flex flex-col gap-[4px]">
                 <div className="flex gap-[3px]">
                   <Category
-                    text="성취"
-                    textColor="#38D1B8"
-                    bgColor="#7BEAD742"
+                    text={news.categories.text || ""}
+                    textColor={news.categories.color || ""}
+                    bgColor={news.categories.bgColor || ""}
                   />
-                  <Category text="사회" textColor="#979797" bgColor="#ECECEC" />
                 </div>
                 <p className="line-clamp-2 w-[189px] text-[16px] font-bold leading-[140%] tracking-[-0.48px] text-[#2A2A2A]">
                   {news.title}
