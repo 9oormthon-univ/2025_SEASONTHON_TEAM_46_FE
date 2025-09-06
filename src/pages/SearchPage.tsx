@@ -2,7 +2,7 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import { Link } from "react-router-dom";
 import SearchPageHeader from "../components/search/SearchPageHeader";
 import HotNewsCard from "../components/hot/HotNewsCard";
-import hotNews1 from "../assets/images/hot_news1.png";
+import hotNews1 from "../assets/images/default_test_img.png";
 
 import type { CategoryKey } from "../components/search/CategoryTabs";
 import { searchNews } from "../api/search/searchNews";

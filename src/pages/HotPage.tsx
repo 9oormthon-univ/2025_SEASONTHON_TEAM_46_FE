@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Header from "../components/common/Header";
 import HotNewsCard from "../components/hot/HotNewsCard";
-import hotNews1 from "../assets/images/hot_news1.png";
+import hotNews1 from "../assets/images/default_test_img.png";
 
 import type { HotNewsRes } from "../types/hot";
 import { fetchHotNewsList } from "../api/hot/getHotNewsList";

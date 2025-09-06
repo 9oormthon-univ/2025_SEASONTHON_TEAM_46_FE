@@ -6,7 +6,7 @@ import {
   type RawRecommendedNews,
 } from "../../api/report/getRecommendation";
 import type { NewsItem } from "../../types/NewsItem";
-import hotNewsThumb from "../../assets/images/hot_news1.png";
+import hotNewsThumb from "../../assets/images/default_test_img.png";
 function toNewsImgItems(rows: RawRecommendedNews[]): NewsItem[] {
   return (rows ?? []).map((r) => ({
     id: r.id,
