@@ -3,10 +3,14 @@ import { NavLink } from "react-router-dom";
 import HomeSvg from "../../assets/icons/home_logo.svg";
 import HotSvg from "../../assets/icons/hot_logo.svg";
 import MySvg from "../../assets/icons/my_page_logo.svg";
+import SearchSvg from "../../assets/icons/search_logo.svg";
+import ReportSvg from "../../assets/icons/report_logo.svg";
 
 import HomeBlueSvg from "../../assets/icons/home_blue_logo.svg";
 import HotBlueSvg from "../../assets/icons/hot_blue_logo.svg";
 import MyBlueSvg from "../../assets/icons/my_page_blue_logo.svg";
+import SearchBlugSvg from "../../assets/icons/search_blue_logo.svg";
+import ReportBlueSvg from "../../assets/icons/report_blue_logo.svg";
 
 export function BottomNav() {
   return (
@@ -28,7 +32,23 @@ export function BottomNav() {
           </>
         )}
       </NavLink>
-
+      <NavLink
+        to="/search"
+        className="flex flex-1 flex-col items-center justify-center text-[10px] font-semibold"
+      >
+        {({ isActive }) => (
+          <>
+            <img
+              src={isActive ? SearchBlugSvg : SearchSvg}
+              alt="탐색"
+              className="h-6 w-6"
+            />
+            <span className={isActive ? "text-[#7F81FF]" : "text-[#B3B3B3]"}>
+              탐색
+            </span>
+          </>
+        )}
+      </NavLink>
       <NavLink
         to="/hot"
         className="flex flex-1 flex-col items-center justify-center text-[10px] font-semibold"
@@ -46,7 +66,23 @@ export function BottomNav() {
           </>
         )}
       </NavLink>
-
+      <NavLink
+        to="/report"
+        className="flex flex-1 flex-col items-center justify-center text-[10px] font-semibold"
+      >
+        {({ isActive }) => (
+          <>
+            <img
+              src={isActive ? ReportBlueSvg : ReportSvg}
+              alt="리포트"
+              className="h-6 w-6"
+            />
+            <span className={isActive ? "text-[#7F81FF]" : "text-[#B3B3B3]"}>
+              리포트
+            </span>
+          </>
+        )}
+      </NavLink>
       <NavLink
         to="/my"
         className="flex flex-1 flex-col items-center justify-center text-[10px] font-semibold"
