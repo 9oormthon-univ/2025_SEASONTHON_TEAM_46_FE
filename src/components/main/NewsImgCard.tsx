@@ -14,7 +14,7 @@ export function NewsImgCard({
   topic,
   newsList,
 }: {
-  topic: string;
+  topic?: string;
   newsList: NewsItem[];
 }) {
   return (
@@ -31,8 +31,12 @@ export function NewsImgCard({
             <div className="flex gap-[21px]">
               <div className="flex flex-col gap-[4px]">
                 <div className="flex gap-[3px]">
-                  <Category text="성취" color="#79E2D0" />
-                  <Category text="사회" color="#FF6556" />
+                  <Category
+                    text="성취"
+                    textColor="#38D1B8"
+                    bgColor="#7BEAD742"
+                  />
+                  <Category text="사회" textColor="#979797" bgColor="#ECECEC" />
                 </div>
                 <p className="line-clamp-2 w-[189px] text-[16px] font-bold leading-[140%] tracking-[-0.48px] text-[#2A2A2A]">
                   {news.title}

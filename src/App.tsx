@@ -10,6 +10,7 @@ import SearchPage from "./pages/SearchPage";
 import Detail from "./pages/Detail";
 import NewsPick from "./pages/NewsPick";
 import LoginCallback from "./pages/LoginCallback";
+import ReportPage from "./pages/ReportPage";
 
 function App() {
   const showBottomNav: boolean = useStore((state) => state.showBottomNav);
@@ -26,6 +27,7 @@ function App() {
           <Route path="/login/callback" element={<LoginCallback />} />
           <Route path="/news-pick" element={<NewsPick />} />
           <Route path="/search" element={<SearchPage />} />
+          <Route path="/report" element={<ReportPage />} />
         </Routes>
         {showBottomNav && <BottomNav />}
       </div>

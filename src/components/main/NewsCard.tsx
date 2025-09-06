@@ -11,8 +11,8 @@ export function NewsCard() {
       />
       <div className="absolute bottom-0 left-0 right-0 top-0 rounded-[10px] bg-black/60 pl-[15px] pt-[13px]">
         <section className="flex gap-[3px]">
-          <Category text="논란" color="#FF6556" />
-          <Category text="세계" color="#79E2D0" />
+          <Category text="논란" textColor="#FF7676" bgColor="#FF767642" />
+          <Category text="세계" textColor="#EAEAEA" bgColor="#2A2A2ACC" />
         </section>
         <section>
           <div className="mt-[15px] w-[195px]">
