@@ -1,4 +1,3 @@
-// src/constants/emotionMeta.ts
 export type EmotionKey = "희망" | "재미" | "분노" | "불안" | "슬픔" | "중립";
 
 export const EMOTION_META: Record<
