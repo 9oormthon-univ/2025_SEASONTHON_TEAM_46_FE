@@ -14,7 +14,7 @@ export function NewsImgCard({
   topic,
   newsList,
 }: {
-  topic: string;
+  topic?: string;
   newsList: NewsItem[];
 }) {
   return (
