@@ -1,4 +1,4 @@
-type Segment = {
+export type Segment = {
   label: string;
   value: number;
   color: string;
@@ -10,6 +10,7 @@ type Props = {
   strokeWidth?: number;
   gap?: number;
   className?: string;
+  onSegmentClick?: (label: string) => void;
 };
 
 export default function EmotionChart({
@@ -18,6 +19,7 @@ export default function EmotionChart({
   strokeWidth = 18,
   gap = 6,
   className = "",
+  onSegmentClick,
 }: Props) {
   const r = (width - strokeWidth) / 2;
   const height = r + strokeWidth;
@@ -60,19 +62,38 @@ export default function EmotionChart({
         acc += len + (i < segments.length - 1 ? gapPct : 0);
 
         return (
-          <path
-            key={seg.label + i}
-            d={d}
-            fill="none"
-            stroke={seg.color}
-            strokeWidth={strokeWidth}
-            strokeLinecap="round"
-            pathLength={pathLength}
-            style={{
-              strokeDasharray: `${len} ${pathLength}`,
-              strokeDashoffset: -offset,
-            }}
-          />
+          <g key={seg.label + i}>
+            {/* 실제 보이는 스트로크 */}
+            <path
+              d={d}
+              fill="none"
+              stroke={seg.color}
+              strokeWidth={strokeWidth}
+              strokeLinecap="round"
+              pathLength={pathLength}
+              style={{
+                strokeDasharray: `${len} ${pathLength}`,
+                strokeDashoffset: -offset,
+                transition: "opacity .15s ease",
+              }}
+            />
+            {/* 클릭 히트존(두껍고 투명) */}
+            <path
+              d={d}
+              fill="none"
+              stroke="transparent"
+              strokeWidth={strokeWidth + 16}
+              pathLength={pathLength}
+              style={{
+                strokeDasharray: `${len} ${pathLength}`,
+                strokeDashoffset: -offset,
+                cursor: onSegmentClick ? "pointer" : "default",
+              }}
+              onClick={() => onSegmentClick?.(seg.label)}
+            >
+              <title>{seg.label}</title>
+            </path>
+          </g>
         );
       })}
     </svg>
