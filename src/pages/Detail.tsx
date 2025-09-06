@@ -50,9 +50,9 @@ export default function Detail() {
           isImgVisible: false,
           categories: [
             {
-              text: "논란",
-              color: "#F63E3E",
-              bgColor: "rgba(255, 118, 118, 0.26)",
+              text: newsData?.categoryMeta.text ?? "",
+              color: newsData?.categoryMeta.color ?? "",
+              bgColor: newsData?.categoryMeta.bgColor ?? "",
             },
           ],
           title: newsData?.title,

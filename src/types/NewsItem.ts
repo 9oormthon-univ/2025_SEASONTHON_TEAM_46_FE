@@ -3,5 +3,9 @@ export interface NewsItem {
   title: string;
   content: string;
   imgSrc: string;
-  categories: { text: string; color: string }[];
+  categories: {
+    text: string | null;
+    color: string | null;
+    bgColor: string | null;
+  };
 }
