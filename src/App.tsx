@@ -11,6 +11,7 @@ import Detail from "./pages/Detail";
 import NewsPick from "./pages/NewsPick";
 import LoginCallback from "./pages/LoginCallback";
 import ReportPage from "./pages/ReportPage";
+import Onboarding from "./pages/Onboarding";
 
 function App() {
   const showBottomNav: boolean = useStore((state) => state.showBottomNav);
@@ -19,6 +20,7 @@ function App() {
       <div className="relative mx-auto min-h-screen w-dvw">
         <Routes>
           <Route path="/" element={<Login />} />
+          <Route path="/onboarding" element={<Onboarding />} />
           <Route path="/create-account" element={<CreateAccount />} />
           <Route path="/news/detail/:id" element={<Detail />} />
           <Route path="/home" element={<HomePage />} />
