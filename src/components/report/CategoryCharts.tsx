@@ -9,7 +9,7 @@ import {
 } from "recharts";
 import type { LabelProps } from "recharts";
 
-type Item = { name: string; value: number }; // value는 % 값
+type Item = { name: string; value: number };
 type SimpleViewBox = {
   x?: number | string;
   y?: number | string;
@@ -62,7 +62,7 @@ export default function CategoryCharts({ items }: Props) {
 
   return (
     <div className="w-full">
-      <div className="flex w-[393px] flex-col items-center gap-4">
+      <div className="flex w-full flex-col items-center gap-4">
         <div className="h-[260px] w-full">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart

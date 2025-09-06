@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { EMOTION_META, type EmotionKey } from "../../constant/emotionData";
 import { Category } from "../common/Category";
 import HotNewsCard from "../hot/HotNewsCard";
-import hotNewsThumb from "../../assets/images/hot_news1.png";
+import hotNewsThumb from "../../assets/images/default_test_img.png";
 import {
   getNewsBySentiment,
   type SentimentCode,
