@@ -8,6 +8,7 @@ type Props = {
   onQueryChange: (q: string) => void;
   onSubmit: (q: string) => void;
   showTabs: boolean;
+  onCategoryChange?: (cat: CategoryKey) => void;
   onInputFocus?: () => void;
   onInputBlur?: () => void;
   className?: string;
@@ -18,6 +19,7 @@ export default function SearchPageHeader({
   onQueryChange,
   onSubmit,
   showTabs,
+  onCategoryChange,
   onInputFocus,
   onInputBlur,
   className = "",
@@ -35,7 +37,15 @@ export default function SearchPageHeader({
           onFocus={onInputFocus}
           onBlur={onInputBlur}
         />
-        {showTabs && <CategoryTabs value={cat} onChange={setCat} />}
+        {showTabs && (
+          <CategoryTabs
+            value={cat}
+            onChange={(next) => {
+              setCat(next);
+              onCategoryChange?.(next);
+            }}
+          />
+        )}
       </div>
     </div>
   );
