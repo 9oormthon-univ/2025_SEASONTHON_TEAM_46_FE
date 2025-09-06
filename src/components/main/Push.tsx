@@ -10,7 +10,6 @@ export function Push({ text }: { text: string }) {
   useEffect(() => {
     api.get("/api/news/1/recommendation/opposing-emotion").then((res) => {
       setCategoryNews(res.data);
-      console.log(res.data);
     });
     api.get("/api/news/3/recommendation/opposing-emotion").then((res) => {
       setEmotionNews(res.data);
