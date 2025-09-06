@@ -5,10 +5,16 @@ import DefaultImage from "../../assets/images/default_test_img.png";
 export function NewsCard({
   id,
   title,
+  categories,
   img,
   content,
 }: {
   id: number;
+  categories: {
+    text: string | null;
+    color: string | null;
+    bgColor: string | null;
+  };
   title: string;
   img: string;
   content: string;
@@ -28,8 +34,11 @@ export function NewsCard({
       />
       <div className="absolute bottom-0 left-0 right-0 top-0 rounded-[10px] bg-black/60 pl-[15px] pt-[13px]">
         <section className="flex gap-[3px]">
-          <Category text="논란" textColor="#FF7676" bgColor="#FF767642" />
-          <Category text="세계" textColor="#EAEAEA" bgColor="#2A2A2ACC" />
+          <Category
+            text={categories.text || ""}
+            textColor={categories.color || ""}
+            bgColor={categories.bgColor || ""}
+          />
         </section>
         <section>
           <div className="mt-[15px] w-[195px]">
