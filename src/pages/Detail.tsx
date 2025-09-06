@@ -31,6 +31,7 @@ export default function Detail() {
       api.get(`/api/news/${id}/body`).then((res) => {
         setNewsBody(res.data.body);
       });
+      api.post(`/api/news-view/${id}`).then(() => {});
     }
   }, [id]);
 
@@ -55,7 +56,7 @@ export default function Detail() {
             },
           ],
           title: newsData?.title,
-          authorImg: newsData?.thumbnail || DefaultImage,
+          authorImg: newsData?.outlet_img || undefined,
           meta: `${newsData?.author || "미정"} | ${newsData?.taggedAt.slice(0, 10)}`,
           thumbnail: newsData?.thumbnail,
         }}

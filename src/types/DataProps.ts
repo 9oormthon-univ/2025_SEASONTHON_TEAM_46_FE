@@ -7,6 +7,7 @@ export interface DataProps {
   emotionRating: number | null;
   feedUrl: string;
   id: number;
+  outlet_img: string | null;
   likeCount: number;
   link: string;
   orientation: null;

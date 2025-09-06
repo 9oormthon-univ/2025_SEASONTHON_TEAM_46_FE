@@ -12,6 +12,7 @@
 import { Category } from "../common/Category";
 import type { NewsTitleProps } from "../../types/NewsTitleProps";
 import { useNavigate } from "react-router-dom";
+import DefaultImg from "../../assets/images/default_test_img.png";
 
 export function NewsTitle({
   id,
@@ -50,7 +51,7 @@ export function NewsTitle({
         </p>
         <div className="flex gap-[4px]">
           <img
-            src={authorImg}
+            src={`${import.meta.env.VITE_API_URL}${authorImg}` || DefaultImg}
             alt="작성자 프로필"
             height={20}
             width={20}
