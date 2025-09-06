@@ -1,5 +1,7 @@
 // src/pages/ReportPage.tsx
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
 import Header from "../components/common/Header";
 import CategoryCharts from "../components/report/CategoryCharts";
 import EmotionChart, { type Segment } from "../components/report/EmotionChart";
@@ -7,11 +9,16 @@ import NewsSentimentBar from "../components/report/NewsSentimentBar";
 import RecommendPage from "../components/report/Recommend";
 import SummaryBar from "../components/report/SummaryBar";
 import EmotionToastSheet from "../components/report/BottomSheet";
-import type { EmotionKey } from "../constant/emotionData";
-import mascot from "../assets/images/mascot.png";
 import EmotionHighlight from "../components/report/EmotionHighlight";
+import type { EmotionKey } from "../constant/emotionData";
+
+import mascot from "../assets/images/mascot.png";
 import question from "../assets/icons/question.svg";
-const segments: Segment[] = [
+
+import { getSentiment } from "../api/report/getSentiment";
+import { getEmotion } from "../api/report/getEmotionAnalysis";
+
+const ringSegments: Segment[] = [
   { label: "희망", color: "#7BEAD7", value: 25 },
   { label: "재미", color: "#B5F6EB", value: 15 },
   { label: "분노", color: "#FF7676", value: 20 },
@@ -20,9 +27,55 @@ const segments: Segment[] = [
   { label: "중립", color: "#D9D9D9", value: 15 },
 ];
 
+type EmotionItem = {
+  code: "POSITIVE" | "NEGATIVE" | "NEUTRAL" | string;
+  count: number;
+};
+
 export default function ReportPage() {
   const [open, setOpen] = useState(false);
   const [activeEmotion, setActiveEmotion] = useState<EmotionKey | null>(null);
+
+  const [lines, setLines] = useState<string[]>([]);
+
+  const [positive, setPositive] = useState(0);
+  const [negative, setNegative] = useState(0);
+  const [neutral, setNeutral] = useState(0);
+  const total = positive + negative + neutral;
+
+  const [loading, setLoading] = useState(true);
+  const [err, setErr] = useState<string | null>(null);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const [summary, emotionList] = await Promise.all([
+          getSentiment(),
+          getEmotion(),
+        ]);
+
+        const nextLines = summary.includes("\n")
+          ? summary.split("\n").filter(Boolean)
+          : [summary];
+        setLines(nextLines);
+
+        const { pos, neg, neu } = countEmotion(emotionList);
+        setPositive(pos);
+        setNegative(neg);
+        setNeutral(neu);
+      } catch (e: unknown) {
+        let message = "데이터를 불러오지 못했습니다.";
+        if (axios.isAxiosError(e)) {
+          message = e.response?.data?.message ?? e.message ?? message;
+        } else if (e instanceof Error) {
+          message = e.message || message;
+        }
+        setErr(message);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, []);
 
   return (
     <div className="flex min-h-dvh w-full flex-col items-center bg-[#FAFAFA] pb-[91px]">
@@ -34,7 +87,7 @@ export default function ReportPage() {
           onTitleRight={() => console.log("next")}
         />
 
-        <h2 className="mt-[33px] w-[196px] text-center text-[20px] font-extrabold leading-[28px] text-[#F2F2F2] [font-feature-settings:'liga'_off,'clig'_off]">
+        <h2 className="mt-[33px] w-[196px] text-center text-[20px] font-extrabold leading-[28px] text-[#F2F2F2]">
           이번 주 나의 감정 소비,
           <br />
           <span className="inline-flex items-center justify-center gap-[6px]">
@@ -47,10 +100,9 @@ export default function ReportPage() {
           </span>
         </h2>
 
-        {/* 차트 래퍼 안에서는 마스코트 제거 */}
         <div className="relative mt-[33px] w-[340px]">
           <EmotionChart
-            segments={segments}
+            segments={ringSegments}
             width={340}
             strokeWidth={18}
             gap={12}
@@ -62,7 +114,7 @@ export default function ReportPage() {
           />
           {open && activeEmotion && (
             <EmotionHighlight
-              segments={segments}
+              segments={ringSegments}
               label={activeEmotion}
               width={340}
               strokeWidth={18}
@@ -72,7 +124,6 @@ export default function ReportPage() {
           )}
         </div>
 
-        {/* ✅ 마스코트: 헤더 컨테이너 기준으로 맨 아래에 붙임 */}
         <img
           src={mascot}
           alt="뉴스띵키 마스코트"
@@ -80,11 +131,29 @@ export default function ReportPage() {
           className="pointer-events-none absolute bottom-0 left-1/2 z-10 h-[140px] w-[180px] -translate-x-1/2 select-none"
         />
       </div>
+
       <div className="flex w-[393px] flex-col gap-[33px] bg-white px-7 pt-[38px]">
         <div className="flex flex-col gap-4">
-          <p className="text-lg font-bold text-[#2A2A2A]">이번주 뉴스 소비</p>
-          <NewsSentimentBar />
+          <div className="flex items-center gap-[5px]">
+            <p className="text-lg font-bold text-[#2A2A2A]">이번주 뉴스 소비</p>
+            <span
+              className="text-[16px] font-medium leading-[140%]"
+              style={{
+                color: "rgba(127, 129, 255, 0.90)",
+              }}
+              aria-label="이번주 총 뉴스 소비 건수"
+            >
+              {loading ? "-" : total.toLocaleString()}
+            </span>
+          </div>
+
+          <NewsSentimentBar
+            positive={positive}
+            negative={negative}
+            neutral={neutral}
+          />
         </div>
+
         <div className="mb-[25px]">
           <div className="flex flex-col gap-4">
             <p className="text-lg font-bold text-[#2A2A2A]">
@@ -92,19 +161,20 @@ export default function ReportPage() {
             </p>
             <CategoryCharts />
           </div>
-          <SummaryBar
-            lines={[
-              "이번 주 경제 기사보다 정치 기사에 더 많은 시간 소비",
-              "부정적 뉴스 비율이 전체의 50%로 높게 나타남",
-            ]}
-          />
+
+          {loading ? (
+            <SummaryBar lines={["요약을 불러오는 중…"]} />
+          ) : err ? (
+            <SummaryBar lines={[err]} />
+          ) : (
+            <SummaryBar lines={lines} />
+          )}
         </div>
       </div>
 
       <div className="h-3 w-[393px] flex-shrink-0 bg-[#FAFAFA]" />
       <RecommendPage />
 
-      {/* 바텀시트 */}
       <EmotionToastSheet
         open={open}
         emotion={activeEmotion}
@@ -112,4 +182,26 @@ export default function ReportPage() {
       />
     </div>
   );
+}
+
+function countEmotion(list: EmotionItem[]) {
+  let pos = 0,
+    neg = 0,
+    neu = 0;
+  for (const item of list ?? []) {
+    switch ((item.code || "").toUpperCase()) {
+      case "POSITIVE":
+        pos += item.count || 0;
+        break;
+      case "NEGATIVE":
+        neg += item.count || 0;
+        break;
+      case "NEUTRAL":
+        neu += item.count || 0;
+        break;
+      default:
+        break;
+    }
+  }
+  return { pos, neg, neu };
 }
