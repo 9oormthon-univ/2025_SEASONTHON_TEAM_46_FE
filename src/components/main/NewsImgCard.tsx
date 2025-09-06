@@ -37,6 +37,7 @@ export function NewsImgCard({
             <div className="flex gap-[21px]">
               <div className="flex flex-col gap-[4px]">
                 <div className="flex gap-[3px]">
+
                   {news.sentiment && (
                     <Category
                       text={news.sentiment.text || ""}
@@ -51,6 +52,7 @@ export function NewsImgCard({
                       bgColor={news.category.bgColor || ""}
                     />
                   )}
+
                 </div>
                 <p className="line-clamp-2 w-[189px] text-[16px] font-bold leading-[140%] tracking-[-0.48px] text-[#2A2A2A]">
                   {news.title}
