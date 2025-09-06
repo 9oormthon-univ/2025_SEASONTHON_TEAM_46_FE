@@ -9,7 +9,7 @@ import {
 } from "recharts";
 import type { LabelProps } from "recharts";
 
-type Item = { name: string; value: number };
+type Item = { name: string; value: number }; // value는 % 값
 type SimpleViewBox = {
   x?: number | string;
   y?: number | string;
@@ -17,31 +17,24 @@ type SimpleViewBox = {
   height?: number | string;
 };
 type LabelPropsWithViewBox = LabelProps & { viewBox?: SimpleViewBox };
-type GridGenArg = {
-  yAxis?: {
-    scale?: (v: number) => number | string;
-  };
-};
-const data: Item[] = [
-  { name: "정치", value: 8 },
-  { name: "세계", value: 48 },
-  { name: "IT", value: 30 },
-  { name: "생활", value: 12 },
-  { name: "사회", value: 81 },
-];
+type GridGenArg = { yAxis?: { scale?: (v: number) => number | string } };
 
-export default function CategoryCharts() {
-  const max = Math.max(...data.map((d) => d.value));
+type Props = {
+  items: Item[]; // ReportPage에서 계산해서 내려줌
+};
+
+export default function CategoryCharts({ items }: Props) {
+  const safeItems = Array.isArray(items) ? items : [];
+  const max = safeItems.length ? Math.max(...safeItems.map((d) => d.value)) : 0;
 
   const renderMaxLabel = (props: LabelPropsWithViewBox) => {
     const { value, index, viewBox } = props;
     if (typeof index !== "number" || !viewBox) return null;
-    if (data[index].value !== max) return null;
+    if (!safeItems.length || safeItems[index].value !== max) return null;
 
     const vx = Number(viewBox.x ?? 0);
     const vy = Number(viewBox.y ?? 0);
     const vw = Number(viewBox.width ?? 0);
-
     const cx = vx + vw / 2;
     const ty = vy - 5;
 
@@ -58,6 +51,7 @@ export default function CategoryCharts() {
       </text>
     );
   };
+
   const genGridLines = (p: GridGenArg) => {
     const s = p.yAxis?.scale;
     if (!s) return [];
@@ -71,29 +65,24 @@ export default function CategoryCharts() {
       <div className="flex w-[393px] flex-col items-center gap-4">
         <div className="h-[260px] w-full">
           <ResponsiveContainer width="100%" height="100%">
-            {/* 막대 */}
             <BarChart
-              data={data}
+              data={safeItems}
               barSize={20}
               barCategoryGap={24}
               margin={{ top: 10, right: 44, left: 0, bottom: 20 }}
             >
-              {/* 점선 */}
               <CartesianGrid
                 vertical={false}
                 stroke="#E6E6E6"
                 strokeDasharray="6 6"
                 horizontalCoordinatesGenerator={genGridLines}
               />
-
-              {/* 라벨 */}
               <XAxis
                 dataKey="name"
                 tick={{ fill: "#7F81FF", fontSize: 14, fontWeight: 700 }}
                 axisLine={{ stroke: "#7F81FF" }}
                 tickLine={false}
               />
-              {/* 오른쪽 축 */}
               <YAxis
                 orientation="right"
                 domain={[0, 100]}
@@ -104,14 +93,12 @@ export default function CategoryCharts() {
                 tickLine={false}
                 width={36}
               />
-
               <defs>
                 <linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%" stopColor="#3D57FE" />
                   <stop offset="100%" stopColor="#7F81FF" stopOpacity={0.35} />
                 </linearGradient>
               </defs>
-
               <Bar
                 dataKey="value"
                 fill="url(#barGrad)"
