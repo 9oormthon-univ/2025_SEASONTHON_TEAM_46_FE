@@ -31,6 +31,7 @@ export default function Detail() {
       api.get(`/api/news/${id}/body`).then((res) => {
         setNewsBody(res.data.body);
       });
+      api.post(`/api/news-view/${id}`);
     }
   }, [id]);
 
@@ -49,9 +50,9 @@ export default function Detail() {
           isImgVisible: false,
           categories: [
             {
-              text: "논란",
-              color: "#F63E3E",
-              bgColor: "rgba(255, 118, 118, 0.26)",
+              text: newsData?.categoryMeta.text ?? "",
+              color: newsData?.categoryMeta.color ?? "",
+              bgColor: newsData?.categoryMeta.bgColor ?? "",
             },
           ],
           title: newsData?.title,

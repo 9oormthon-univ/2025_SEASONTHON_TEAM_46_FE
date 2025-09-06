@@ -18,7 +18,6 @@ export default function MyPage() {
   useEffect(() => {
     api.get("/user/info").then((res) => {
       setProfileData(res.data);
-      console.log(res.data);
     });
   }, []);
   return (
