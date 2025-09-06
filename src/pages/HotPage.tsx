@@ -5,7 +5,10 @@ import hotNews1 from "../assets/images/hot_news1.png";
 
 import type { HotNewsRes } from "../types/hot";
 import { fetchHotNewsList } from "../api/hot/getHotNewsList";
+<<<<<<< HEAD
 import { Link } from "react-router-dom";
+=======
+>>>>>>> 6d299c5 (feat: hot 뉴스 불러오기 api 연동)
 
 type Badge = { text: string; color: string; bgColor: string };
 type CardItem = {
@@ -31,6 +34,7 @@ export default function HotPage() {
           id: d.id,
           rank: idx + 1,
           title: d.title,
+<<<<<<< HEAD
           desc: d.outlet,
           categories: [
             {
@@ -40,11 +44,22 @@ export default function HotPage() {
             },
             {
               text: "IT",
+=======
+          desc: `${d.outlet} · ❤️ ${d.likeCount.toLocaleString()}`,
+          categories: [
+            { text: d.outlet, color: "#7F81FF", bgColor: "#EEF0FF" },
+            {
+              text: d.orientation || "NEWS",
+>>>>>>> 6d299c5 (feat: hot 뉴스 불러오기 api 연동)
               color: "#979797",
               bgColor: "#ECECEC",
             },
           ],
+<<<<<<< HEAD
           thumbnail: d.image || hotNews1,
+=======
+          thumbnail: hotNews1,
+>>>>>>> 6d299c5 (feat: hot 뉴스 불러오기 api 연동)
         }));
 
         setItems(mapped);
@@ -65,8 +80,13 @@ export default function HotPage() {
   return (
     <div className="min-h-dvh bg-[#FAFAFA]">
       <Header title="이번주 핫뉴스 TOP 10" />
+<<<<<<< HEAD
       <div className="pb-[91px relative flex w-full flex-col items-center pt-9">
         <div className="flex w-[393px] flex-col items-center gap-[25px]">
+=======
+      <div className="relative flex w-full flex-col items-center pb-[90px] pt-9">
+        <div className="flex w-[394px] flex-col items-center gap-[25px]">
+>>>>>>> 6d299c5 (feat: hot 뉴스 불러오기 api 연동)
           {loading && <div>불러오는 중…</div>}
           {err && <div className="text-red-500">{err}</div>}
 

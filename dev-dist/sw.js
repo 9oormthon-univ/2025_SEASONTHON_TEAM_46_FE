@@ -83,7 +83,11 @@ define(["./workbox-86c9b217"], function (workbox) {
     [
       {
         url: "index.html",
+<<<<<<< HEAD
         revision: "0.6rc4l5ufob",
+=======
+        revision: "0.6oe229barvo",
+>>>>>>> 6d299c5 (feat: hot 뉴스 불러오기 api 연동)
       },
     ],
     {},
