@@ -31,6 +31,7 @@ export default function Detail() {
       api.get(`/api/news/${id}/body`).then((res) => {
         setNewsBody(res.data.body);
       });
+      api.post(`/api/news-view/${id}`).then(() => {});
     }
   }, [id]);
 
@@ -49,13 +50,13 @@ export default function Detail() {
           isImgVisible: false,
           categories: [
             {
-              text: "논란",
-              color: "#F63E3E",
-              bgColor: "rgba(255, 118, 118, 0.26)",
+              text: newsData?.categoryMeta.text ?? "",
+              color: newsData?.categoryMeta.color ?? "",
+              bgColor: newsData?.categoryMeta.bgColor ?? "",
             },
           ],
           title: newsData?.title,
-          authorImg: newsData?.thumbnail || DefaultImage,
+          authorImg: newsData?.outlet_img || undefined,
           meta: `${newsData?.author || "미정"} | ${newsData?.taggedAt.slice(0, 10)}`,
           thumbnail: newsData?.thumbnail,
         }}

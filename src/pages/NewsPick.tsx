@@ -1,50 +1,56 @@
 import HotNewsCard from "../components/hot/HotNewsCard";
 import { FilterHeader } from "../components/my/FilterHeader";
-import hotNews1 from "../assets/images/hot_news1.png";
+import { useEffect, useState } from "react";
 import { useStore } from "../stores/useStore";
-import { useEffect } from "react";
+import api from "../hooks/api";
 
 type Item = {
   id: number;
+  image: string;
+  likeCount: number;
+  orientation: string;
   title: string;
-  desc: string;
-  categories: { text: string; color: string; bgColor: string }[];
-  thumbnail: string;
-};
-
-const baseItem: Omit<Item, "id"> = {
-  title: "오픈 ai, 해외 데이터 센터 구축속도.. 인도서 파트너 물색",
-  desc: "(샌프란시스코=연합뉴스) 김태종...",
-  categories: [
-    { text: "성취", color: "#38D1B8", bgColor: "#79E2D0" },
-    { text: "IT", color: "#979797", bgColor: "#E0E0E0" },
-  ],
-  thumbnail: hotNews1,
 };
 
 export default function NewsPick() {
+  const [newsPick, setNewsPick] = useState<Item[]>([]);
   const setBottomNav = useStore((state) => state.setBottomNav);
-  const listToRender: Item[] = Array.from({ length: 10 }, (_, idx) => ({
-    ...baseItem,
-    id: idx + 1,
-  }));
 
   useEffect(() => {
     setBottomNav(false);
     return () => setBottomNav(true);
   }, [setBottomNav]);
 
+  useEffect(() => {
+    const fetchLikeStatus = async () => {
+      try {
+        const res = await api.get(`my-likes`);
+        setNewsPick(res.data);
+        console.log(res.data);
+      } catch (error) {
+        console.error("Error fetching like status:", error);
+      }
+    };
+    fetchLikeStatus();
+  }, []);
+
   return (
     <article className="flex h-screen w-full flex-col items-center bg-[#FAFAFA]">
       <FilterHeader />
       <div className="mt-[29px] flex w-full flex-col items-center gap-[25px] pb-[20px]">
-        {listToRender.map((it: Item) => (
+        {newsPick.map((it: Item) => (
           <HotNewsCard
             key={it.id}
             title={it.title}
-            desc={it.desc}
-            categories={it.categories}
-            thumbnail={it.thumbnail}
+            desc={it.orientation}
+            categories={[
+              {
+                text: "논란",
+                color: "#F63E3E",
+                bgColor: "rgba(255, 118, 118, 0.26)",
+              },
+            ]}
+            thumbnail={it.image}
           />
         ))}
       </div>

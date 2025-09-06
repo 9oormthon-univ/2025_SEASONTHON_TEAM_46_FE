@@ -20,7 +20,12 @@ export default function LoginCallback() {
           localStorage.setItem("accessToken", accessToken);
           localStorage.setItem("refreshToken", refreshToken);
 
-          navigate("/home");
+          const onboardingSeen = localStorage.getItem("onboardingSeen");
+          if (onboardingSeen === "true") {
+            navigate("/home");
+          } else {
+            navigate("/onboarding");
+          }
         })
         .catch(() => {
           alert("로그인 실패. 다시 시도해주세요.");

@@ -1,12 +1,18 @@
 export interface DataProps {
   author: string | null;
   category: string | null;
+  categoryMeta: {
+    bgColor: string | null;
+    color: string | null;
+    text: string | null;
+  };
   confidence: number | null;
   crawledAt: string;
   emotion: string | null;
   emotionRating: number | null;
   feedUrl: string;
   id: number;
+  outlet_img: string | null;
   likeCount: number;
   link: string;
   orientation: null;

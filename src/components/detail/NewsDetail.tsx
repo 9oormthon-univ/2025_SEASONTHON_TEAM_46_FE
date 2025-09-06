@@ -15,6 +15,7 @@ import ChatSvg from "../../assets/icons/chat.svg";
 import { useState } from "react";
 import { NewsTitle } from "../main/NewsTitle";
 import type { NewsDetailProps } from "../../types/NewsDetailProps";
+import api from "../../hooks/api";
 
 export function NewsDetail({
   titleData,
@@ -25,6 +26,20 @@ export function NewsDetail({
   comments,
 }: NewsDetailProps) {
   const [isLiked, setIsLiked] = useState(false);
+  const [likedCount, setLikedCount] = useState(likes || 0);
+
+  const handleLike = async () => {
+    setIsLiked(!isLiked);
+    const res = await api.post(`/likes?newsId=${titleData.id}`);
+    if (res.data) {
+      setIsLiked(true);
+      if (typeof likedCount === "number") {
+        setLikedCount(likedCount + 1);
+      } else {
+        setLikedCount(1);
+      }
+    }
+  };
   return (
     <main className="mt-[14px] flex w-full flex-col items-center bg-white pb-[30px] pt-[27px]">
       <article className="flex w-[365px] flex-col items-center gap-[20px]">
@@ -53,11 +68,13 @@ export function NewsDetail({
                   src={isLiked ? HeartBlueSvg : HeartSvg}
                   alt="Heart Icon"
                   className="cursor-pointer"
-                  onClick={() => setIsLiked(!isLiked)}
+                  onClick={() => {
+                    handleLike();
+                  }}
                   width={16}
                   height={14}
                 />
-                <p>{likes || 0}</p>
+                <p>{likedCount || 0}</p>
               </div>
               <div className="flex items-center gap-[4px]">
                 <img src={ChatSvg} alt="Chat Icon" className="cursor-pointer" />

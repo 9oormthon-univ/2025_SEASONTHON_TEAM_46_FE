@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import type { DataProps } from "../../types/DataProps";
 import { NewsTitle } from "./NewsTitle";
 import { useNavigate } from "react-router-dom";
@@ -9,9 +8,6 @@ interface NewNewsProps {
 
 export function NewNews({ data }: NewNewsProps) {
   const navigate = useNavigate();
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
   return (
     <article className="mt-[63px] flex w-[337px] flex-col gap-[16px] pb-[25px]">
       <section className="flex items-center gap-[4px]">
@@ -38,7 +34,7 @@ export function NewNews({ data }: NewNewsProps) {
             },
           ]}
           title={news.title}
-          authorImg={news.thumbnail}
+          authorImg={news.outlet_img ?? undefined}
           meta={`${news.outlet} | ${news.taggedAt.slice(0, 10)}`}
           thumbnail={news.thumbnail}
         />
