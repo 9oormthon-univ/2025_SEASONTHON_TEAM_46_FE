@@ -13,12 +13,20 @@ function toNewsImgItems(rows: RawRecommendedNews[]): NewsItem[] {
     title: r.title,
     content: r.summary?.trim() || r.outlet || "",
     imgSrc: r.thumbnail || hotNewsThumb || "",
-
-    categories: {
-      text: r.categoryMeta?.text ?? null,
-      color: r.categoryMeta?.color ?? null,
-      bgColor: r.categoryMeta?.bgColor ?? null,
-    },
+    category: r.categoryMeta?.text
+      ? {
+          text: r.categoryMeta.text,
+          color: r.categoryMeta.color ?? "#979797",
+          bgColor: r.categoryMeta.bgColor ?? "#ECECEC",
+        }
+      : null,
+    sentiment: r.sentimentMeta?.text
+      ? {
+          text: r.sentimentMeta.text,
+          color: r.sentimentMeta.color ?? "#979797",
+          bgColor: r.sentimentMeta.bgColor ?? "#ECECEC",
+        }
+      : null,
   }));
 }
 

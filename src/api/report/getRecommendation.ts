@@ -28,6 +28,13 @@ export type RawRecommendedNews = {
     color?: string | null;
     bgColor?: string | null;
   } | null;
+  sentimentMeta?: {
+    code?: string | null;
+    text?: string | null;
+    description?: string | null;
+    color?: string | null;
+    bgColor?: string | null;
+  } | null;
 };
 
 export function getOpposingEmotionNews(id = 1) {
