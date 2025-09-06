@@ -20,6 +20,11 @@ export interface DataProps {
   published: string | null;
   rationale: string;
   sentiment: string;
+  sentimentMeta: {
+    bgColor: string | null;
+    color: string | null;
+    text: string | null;
+  };
   summary: string;
   taggedAt: string;
   thumbnail: string;

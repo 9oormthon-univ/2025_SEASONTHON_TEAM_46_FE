@@ -58,6 +58,11 @@ export default function Detail() {
           isImgVisible: false,
           categories: [
             {
+              text: newsData?.sentimentMeta.text || "",
+              color: newsData?.sentimentMeta.color || "",
+              bgColor: newsData?.sentimentMeta.bgColor || "",
+            },
+            {
               text: newsData?.categoryMeta.text ?? "",
               color: newsData?.categoryMeta.color ?? "",
               bgColor: newsData?.categoryMeta.bgColor ?? "",

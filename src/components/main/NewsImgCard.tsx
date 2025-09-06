@@ -38,6 +38,11 @@ export function NewsImgCard({
               <div className="flex flex-col gap-[4px]">
                 <div className="flex gap-[3px]">
                   <Category
+                    text={news.sentiment?.text || ""}
+                    textColor={news.sentiment?.color || ""}
+                    bgColor={news.sentiment?.bgColor || ""}
+                  />
+                  <Category
                     text={news.categories.text || ""}
                     textColor={news.categories.color || ""}
                     bgColor={news.categories.bgColor || ""}
