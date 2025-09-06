@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { SearchBar } from "../common/SearchBar";
+import { useNavigate } from "react-router-dom";
 
 export function Header() {
+  const navigate = useNavigate();
   const [searchText, setSearchText] = useState<string>("");
   return (
     <header className="z-[1] flex h-[346px] w-full flex-col items-center gap-[27px] bg-gradient-to-b from-[#3D57FE] to-[#7F81FF] px-[28px] py-[58px]">
@@ -17,7 +19,9 @@ export function Header() {
         </p>
         <button
           className="cursor-pointer text-[14px] font-[500] text-white/60"
-          onClick={() => {}}
+          onClick={() => {
+            navigate("/report");
+          }}
         >
           바로가기
         </button>

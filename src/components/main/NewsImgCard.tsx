@@ -9,7 +9,8 @@
 
 import { Category } from "../common/Category";
 import type { NewsItem } from "../../types/NewsItem";
-
+import { useNavigate } from "react-router-dom";
+import DefaultImage from "../../assets/images/default_test_img.png";
 export function NewsImgCard({
   topic,
   newsList,
@@ -17,6 +18,7 @@ export function NewsImgCard({
   topic?: string;
   newsList: NewsItem[];
 }) {
+  const navigate = useNavigate();
   return (
     <section className="mt-[18px] flex flex-col items-start gap-[15px]">
       <p className="text-[14px] font-[500] leading-[140%] text-[#7F81FF]/90">
@@ -27,6 +29,10 @@ export function NewsImgCard({
           <article
             key={news.id}
             className="h-[129px] w-[337px] rounded-[10px] bg-[#FAFAFA] px-[18px] py-[14px]"
+            onClick={() => {
+              navigate(`/news/detail/${news.id}`);
+              window.location.reload();
+            }}
           >
             <div className="flex gap-[21px]">
               <div className="flex flex-col gap-[4px]">
@@ -45,7 +51,13 @@ export function NewsImgCard({
                   {news.content}
                 </p>
               </div>
-              <img src={news.imgSrc} alt="이미지" />
+              <img
+                src={news.imgSrc || DefaultImage}
+                alt="이미지"
+                width={88}
+                height={88}
+                className="rounded-lg"
+              />
             </div>
           </article>
         ))}

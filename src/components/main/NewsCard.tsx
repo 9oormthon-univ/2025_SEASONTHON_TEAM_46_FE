@@ -1,11 +1,28 @@
-import TestPng from "../../assets/images/test_news.png";
 import { Category } from "../common/Category";
+import { useNavigate } from "react-router-dom";
+import DefaultImage from "../../assets/images/default_test_img.png";
 
-export function NewsCard() {
+export function NewsCard({
+  id,
+  title,
+  img,
+  content,
+}: {
+  id: number;
+  title: string;
+  img: string;
+  content: string;
+}) {
+  const navigate = useNavigate();
   return (
-    <article className="relative h-[124px] w-[240px] rounded-[10px]">
+    <article
+      className="relative h-[124px] w-[240px] rounded-[10px]"
+      onClick={() => {
+        navigate(`/news/detail/${id}`);
+      }}
+    >
       <img
-        src={TestPng}
+        src={img || DefaultImage}
         alt="News"
         className="h-full w-full rounded-[10px] object-cover"
       />
@@ -17,11 +34,11 @@ export function NewsCard() {
         <section>
           <div className="mt-[15px] w-[195px]">
             <p className="line-clamp-2 text-[16px] font-bold leading-[130%] tracking-[-0.32px] text-[#EDEDED]">
-              "상쾌하다"vs"바보짓"…Z세대 유행 '얼음 넣은 맥주' 논란
+              {title}
             </p>
           </div>
           <p className="mt-[3px] w-[208px] truncate text-[12px] font-[500] leading-[140%] tracking-[-0.24px] text-[#B3B3B3]">
-            최근 미국·영국 등의 Z세대 사이에서 맥주가 요새 열풍
+            {content}
           </p>
         </section>
       </div>

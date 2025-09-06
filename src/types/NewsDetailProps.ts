@@ -1,15 +1,16 @@
 export interface NewsDetailProps {
   titleData: {
-    isImgVisible?: boolean;
-    categories: { text: string; color: string }[];
-    title: string;
-    authorImg: string;
+    id: number;
+    isImgVisible: boolean;
+    categories: { text: string; color: string; bgColor: string }[];
+    title: string | undefined;
+    authorImg: string | undefined;
     meta: string;
     thumbnail?: string;
   };
-  summary: string;
-  content: string;
-  imgSrc: string;
-  likes: number;
-  comments: number;
+  summary: string | undefined;
+  content: string | undefined;
+  imgSrc: string | undefined;
+  likes: number | undefined;
+  comments: number | undefined;
 }

@@ -19,7 +19,7 @@ export default function LoginCallback() {
         .then(() => {
           localStorage.setItem("accessToken", accessToken);
           localStorage.setItem("refreshToken", refreshToken);
-          console.log(accessToken, refreshToken);
+
           navigate("/home");
         })
         .catch(() => {
