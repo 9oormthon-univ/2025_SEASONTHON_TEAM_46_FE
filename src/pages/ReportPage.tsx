@@ -22,15 +22,6 @@ import { getCategoryAnalysis } from "../api/report/getCategoryAnalysis";
 import { getSentimentPercentage } from "../api/report/getSentimentAnalysis";
 import type { SentimentPercentageItem } from "../types/SentimentAnalysis";
 
-// const ringSegments: Segment[] = [
-//   { label: "희망", color: "#7BEAD7", value: 25 },
-//   { label: "재미", color: "#B5F6EB", value: 15 },
-//   { label: "분노", color: "#FF7676", value: 20 },
-//   { label: "불안", color: "#FFB3B3", value: 15 },
-//   { label: "슬픔", color: "#9FA0A3", value: 10 },
-//   { label: "중립", color: "#D9D9D9", value: 15 },
-// ];
-
 type EmotionItem = {
   code: "POSITIVE" | "NEGATIVE" | "NEUTRAL" | string;
   count: number;
@@ -242,18 +233,16 @@ function toCategoryItems(
     name: mapCategoryName(k),
     value: Math.round(((Number(v) || 0) / total) * 100),
   }));
-
-  // .sort((a, b) => b.value - a.value)
 }
 function mapCategoryName(key: string): string {
   const k = (key || "").toLowerCase();
   const map: Record<string, string> = {
     politics: "정치",
-    world: "세계",
-    it: "IT",
-    tech: "IT",
-    lifestyle: "생활",
-    life: "생활",
+    sports: "운동",
+    it_science: "IT",
+    culture: "문화",
+    international: "세계",
+    economy: "경제",
     society: "사회",
   };
 
@@ -262,7 +251,10 @@ function mapCategoryName(key: string): string {
 }
 
 function mapRingSegments(list: SentimentPercentageItem[]): Segment[] {
-  const palette: Record<string, { label: string; color: string }> = {
+  const palette: Record<
+    "HOPE" | "FUN" | "ANGER" | "ANXIETY" | "SADNESS" | "NEUTRAL",
+    { label: string; color: string }
+  > = {
     HOPE: { label: "희망", color: "#7BEAD7" },
     FUN: { label: "재미", color: "#B5F6EB" },
     ANGER: { label: "분노", color: "#FF7676" },
@@ -271,25 +263,36 @@ function mapRingSegments(list: SentimentPercentageItem[]): Segment[] {
     NEUTRAL: { label: "중립", color: "#D9D9D9" },
   };
 
-  const clamp = (n: number) => {
-    const v = Number.isFinite(n) ? n : 0;
-    return Math.max(0, Math.min(100, Math.round(v)));
+  const buckets: Record<string, number> = {
+    HOPE: 0,
+    FUN: 0,
+    ANGER: 0,
+    ANXIETY: 0,
+    SADNESS: 0,
+    NEUTRAL: 0,
   };
 
-  const segments: Segment[] = [];
-
   for (const item of list ?? []) {
-    const key = (item.code || "").toUpperCase();
-    const meta = palette[key];
-    if (!meta) continue;
-    segments.push({
-      label: meta.label,
-      color: meta.color,
-      value: clamp(item.percentage),
-    });
+    const raw = String(item.code || "");
+    const prefix = raw.split("_")[0]?.toUpperCase();
+
+    if (prefix in buckets) {
+      const pct = Number.isFinite(item.percentage) ? item.percentage : 0;
+      buckets[prefix] += pct;
+    }
   }
 
-  if (!segments.length || segments.every((s) => s.value === 0)) {
+  const segments: Segment[] = (
+    ["HOPE", "FUN", "ANGER", "ANXIETY", "SADNESS", "NEUTRAL"] as const
+  )
+    .map((k) => {
+      const meta = palette[k];
+      const val = Math.max(0, Math.min(100, Math.round(buckets[k])));
+      return { label: meta.label, color: meta.color, value: val };
+    })
+    .filter((s) => s.value > 0);
+
+  if (!segments.length) {
     return [{ label: "중립", color: "#D9D9D9", value: 100 }];
   }
 

@@ -38,7 +38,12 @@ export default function EmotionToastSheet({ open, emotion, onClose }: Props) {
 
           <div className="mt-4 flex w-full flex-wrap justify-center gap-[5px] px-6">
             {meta?.subs.map((s) => (
-              <Category key={s} text={s} color={meta.color} />
+              <Category
+                key={s}
+                text={s}
+                textColor={meta.color}
+                bgColor={meta.color}
+              />
             ))}
           </div>
 
@@ -47,14 +52,17 @@ export default function EmotionToastSheet({ open, emotion, onClose }: Props) {
               title="‘케데헌’ 열풍 이정도야?… 외국인 136만명 서울 몰려왔다"
               desc="[이데일리 함지현 기자] 서울시는 7월 ..."
               categories={[
-                // 첫 번째 카테고리는 현재 감정의 대표 색상 사용(예: 희망 → #7BEAD7)
                 meta
-                  ? { text: meta.subs[0] ?? "성취", color: meta.color }
-                  : { text: "성취", color: "#7BEAD7" },
-                // 두 번째는 회색 계열
-                { text: "사회", color: "#8C8C8C" },
+                  ? {
+                      text: meta.subs[0] ?? "성취",
+                      color: meta.color,
+                      bgColor: meta.color,
+                    }
+                  : { text: "성취", color: "#7BEAD7", bgColor: "#FFFFFF" },
+
+                { text: "사회", color: "#8C8C8C", bgColor: "#FFFFFF" },
               ]}
-              thumbnail={hotNewsThumb} // 또는 외부 URL
+              thumbnail={hotNewsThumb}
               className="w-full"
             />
           </div>
