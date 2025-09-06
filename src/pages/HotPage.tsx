@@ -33,6 +33,7 @@ export default function HotPage() {
     (async () => {
       try {
         const list: HotNewsRes[] = await fetchHotNewsList();
+<<<<<<< HEAD
         console.log(list);
         const mapped: CardItem[] = list.map((d, idx) => ({
           id: d.id,
@@ -81,15 +82,31 @@ export default function HotPage() {
           thumbnail: d.image || hotNews1,
 >>>>>>> ff1f9bd (fix: hot 뉴스 연동 api 수정)
         }));
+=======
+        const mapped: CardItem[] = list.map((d, idx) => {
+          const cat = d.categoryMeta;
+          const catBadge: Badge = {
+            text: cat?.text ?? cat?.label ?? "뉴스",
+            color: cat?.color ?? "#979797",
+            bgColor: cat?.bgColor ?? "#ECECEC",
+          };
+
+          return {
+            id: d.id,
+            rank: idx + 1,
+            title: d.title,
+            desc: d.outlet,
+            categories: [catBadge],
+            thumbnail: d.image || hotNews1,
+          };
+        });
+>>>>>>> 66e3b2c (fix: 카테고리 수정)
 
         setItems(mapped);
       } catch (err: unknown) {
         let message = "핫뉴스 목록을 불러오지 못했습니다.";
-        if (typeof err === "string") {
-          message = err;
-        } else if (err instanceof Error) {
-          message = err.message || message;
-        }
+        if (typeof err === "string") message = err;
+        else if (err instanceof Error) message = err.message || message;
         setErr(message);
       } finally {
         setLoading(false);
@@ -102,7 +119,11 @@ export default function HotPage() {
       <Header title="이번주 핫뉴스 TOP 10" />
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       <div className="pb-[91px relative flex w-full flex-col items-center pt-9">
+=======
+      <div className="relative flex w-full flex-col items-center pb-[91px] pt-9">
+>>>>>>> 66e3b2c (fix: 카테고리 수정)
         <div className="flex w-[393px] flex-col items-center gap-[25px]">
 =======
       <div className="relative flex w-full flex-col items-center pb-[90px] pt-9">
