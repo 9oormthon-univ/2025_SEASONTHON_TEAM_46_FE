@@ -1,6 +1,11 @@
 import { NewsCard } from "./NewsCard";
+import type { DataProps } from "../../types/DataProps";
 
-export function HotNews() {
+interface HotNewsProps {
+  data: DataProps[];
+}
+
+export function HotNews({ data }: HotNewsProps) {
   return (
     <section className="flex w-[350px] flex-col items-start gap-[16px]">
       <div className="flex items-center gap-[184px]">
@@ -14,9 +19,13 @@ export function HotNews() {
       </div>
 
       <div className="flex w-full flex-nowrap items-center gap-[8px] overflow-x-auto">
-        {Array.from({ length: 5 }, (_, index) => (
+        {data.slice(0, 5).map((data, index) => (
           <div key={index} className="flex-shrink-0">
-            <NewsCard />
+            <NewsCard
+              title={data.title}
+              img={data.thumbnail}
+              content={data.summary}
+            />
           </div>
         ))}
       </div>

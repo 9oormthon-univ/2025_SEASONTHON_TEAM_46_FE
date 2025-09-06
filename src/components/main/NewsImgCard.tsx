@@ -45,7 +45,13 @@ export function NewsImgCard({
                   {news.content}
                 </p>
               </div>
-              <img src={news.imgSrc} alt="이미지" />
+              <img
+                src={news.imgSrc}
+                alt="이미지"
+                width={88}
+                height={88}
+                className="rounded-lg"
+              />
             </div>
           </article>
         ))}
