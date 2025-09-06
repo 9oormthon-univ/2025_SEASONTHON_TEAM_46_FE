@@ -14,6 +14,7 @@ import type { NewsTitleProps } from "../../types/NewsTitleProps";
 import { useNavigate } from "react-router-dom";
 import DefaultImg from "../../assets/images/default_test_img.png";
 
+
 export function NewsTitle({
   id,
   isImgVisible,
