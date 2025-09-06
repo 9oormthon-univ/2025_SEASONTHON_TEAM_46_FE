@@ -1,7 +1,15 @@
-import { useMemo, useState, useRef, useCallback, useEffect } from "react";
+// src/pages/SearchPage.tsx
+import { useState, useRef, useCallback, useEffect } from "react";
+import { Link } from "react-router-dom";
 import SearchPageHeader from "../components/search/SearchPageHeader";
 import HotNewsCard from "../components/hot/HotNewsCard";
 import hotNews1 from "../assets/images/hot_news1.png";
+
+import type { CategoryKey } from "../components/search/CategoryTabs";
+import { searchNews } from "../api/search/searchNews";
+import { getNewsByCategory } from "../api/search/getCategoryNews";
+import api from "../hooks/api";
+import type { SearchNewsItem } from "../types/search";
 
 type Item = {
   id: number;
@@ -11,47 +19,154 @@ type Item = {
   thumbnail: string;
 };
 
-const BATCH_SIZE = 10;
+const PAGE_SIZE = 10;
+
+function mapCategoryKeyToServer(cat: CategoryKey): string | null {
+  switch (cat) {
+    case "정치":
+      return "POLITICS";
+    case "세계":
+      return "INTERNATIONAL";
+    case "IT":
+      return "IT_SCIENCE";
+    case "생활":
+      return "CULTURE";
+    case "사회":
+      return "SOCIETY";
+    default:
+      return null;
+  }
+}
 
 export default function SearchPage() {
   const [query, setQuery] = useState("");
   const [submitted, setSubmitted] = useState("");
   const [editing, setEditing] = useState(false);
 
-  const baseItem: Omit<Item, "id"> = {
-    title: "오픈 ai, 해외 데이터 센터 구축속도.. 인도서 파트너 물색",
-    desc: "(샌프란시스코=연합뉴스) 김태종...",
-    categories: [
-      { text: "성취", color: "#38D1B8", bgColor: "#7BEAD742" },
-      { text: "IT", color: "#979797", bgColor: "#ECECEC" },
-    ],
-    thumbnail: hotNews1,
-  };
+  const [category, setCategory] = useState<CategoryKey>("전체");
+  const [items, setItems] = useState<Item[]>([]);
+  const [page, setPage] = useState(0);
+  const [hasMore, setHasMore] = useState(false);
 
-  const [items, setItems] = useState<Item[]>(() =>
-    Array.from({ length: BATCH_SIZE }, (_, i) => ({ id: i + 1, ...baseItem })),
+  const sentinelRef = useRef<HTMLDivElement | null>(null);
+  const fetchingRef = useRef(false);
+
+  const toCardItemsFromSearch = (arr: SearchNewsItem[]): Item[] =>
+    arr.map((d) => ({
+      id: d.id,
+      title: d.title,
+      desc: d.outlet,
+      categories: [
+        { text: d.orientation || "NEWS", color: "#979797", bgColor: "#ECECEC" },
+      ],
+      thumbnail: hotNews1,
+    }));
+
+  const toCardItemsFromAll = (arr: SearchNewsItem[]): Item[] =>
+    arr.map((d) => ({
+      id: d.id,
+      title: d.title,
+      desc: d.outlet,
+      categories: [
+        { text: d.orientation ?? "뉴스", color: "#979797", bgColor: "#ECECEC" },
+      ],
+      thumbnail: hotNews1,
+    }));
+
+  useEffect(() => {
+    if (category !== "전체") return;
+    (async () => {
+      try {
+        const res = await api.get("/api/news/all");
+        setItems(toCardItemsFromAll(res.data ?? []));
+        setHasMore(false);
+        setPage(0);
+      } catch (e) {
+        console.error(e);
+        setItems([]);
+        setHasMore(false);
+        setPage(0);
+      }
+    })();
+  }, [category]);
+
+  const fetchSearchPage = useCallback(async (kw: string, p: number) => {
+    if (!kw || fetchingRef.current) return;
+    fetchingRef.current = true;
+    try {
+      const res = await searchNews(kw, p, PAGE_SIZE);
+      const next = toCardItemsFromSearch(res.content || []);
+      setItems((prev) => (p === 0 ? next : prev.concat(next)));
+      setHasMore(!res.last);
+      setPage(res.page);
+    } catch (e) {
+      console.error(e);
+      if (p === 0) setItems([]);
+      setHasMore(false);
+    } finally {
+      fetchingRef.current = false;
+    }
+  }, []);
+
+  const fetchCategoryPage = useCallback(async (cat: CategoryKey, p: number) => {
+    const code = mapCategoryKeyToServer(cat);
+    if (!code || fetchingRef.current) return;
+    fetchingRef.current = true;
+    try {
+      const res = await getNewsByCategory(code, p, PAGE_SIZE);
+      const next = toCardItemsFromSearch(res.content || []);
+      setItems((prev) => (p === 0 ? next : prev.concat(next)));
+      setHasMore(!res.last);
+      setPage(res.page);
+    } catch (e) {
+      console.error(e);
+      if (p === 0) setItems([]);
+      setHasMore(false);
+    } finally {
+      fetchingRef.current = false;
+    }
+  }, []);
+
+  const handleSubmit = useCallback(
+    (q: string) => {
+      const kw = q.trim();
+      setSubmitted(kw);
+      setEditing(false);
+      setItems([]);
+      setPage(0);
+      setHasMore(false);
+      if (kw) fetchSearchPage(kw, 0);
+    },
+    [fetchSearchPage],
   );
 
-  const nextIdRef = useRef(items.length + 1);
-  const loadingRef = useRef(false);
-  const sentinelRef = useRef<HTMLDivElement | null>(null);
+  const handleCategoryChange = useCallback(
+    (next: CategoryKey) => {
+      setCategory(next);
+      setSubmitted("");
+      setQuery("");
+      setItems([]);
+      setPage(0);
+      setHasMore(false);
+
+      const code = mapCategoryKeyToServer(next);
+      if (code) {
+        fetchCategoryPage(next, 0);
+      }
+    },
+    [fetchCategoryPage],
+  );
 
   const loadMore = useCallback(() => {
-    if (loadingRef.current) return;
-    loadingRef.current = true;
-
-    setItems((prev) => {
-      const next = Array.from({ length: BATCH_SIZE }, () => ({
-        id: nextIdRef.current++,
-        ...baseItem,
-      }));
-      return prev.concat(next);
-    });
-
-    setTimeout(() => {
-      loadingRef.current = false;
-    }, 0);
-  }, [baseItem]);
+    const code = mapCategoryKeyToServer(category);
+    if (code) {
+      if (!hasMore) return;
+      fetchCategoryPage(category, page + 1);
+      return;
+    }
+    if (!submitted || !hasMore) return;
+    fetchSearchPage(submitted, page + 1);
+  }, [category, hasMore, page, submitted, fetchCategoryPage, fetchSearchPage]);
 
   useEffect(() => {
     const el = sentinelRef.current;
@@ -66,51 +181,36 @@ export default function SearchPage() {
     return () => io.disconnect();
   }, [loadMore]);
 
-  const norm = (s: string) => s.toLowerCase().trim();
-  const results = useMemo(() => {
-    const q = norm(submitted);
-    if (!q) return items;
-    return items.filter(
-      (it) => norm(it.title).includes(q) || norm(it.desc).includes(q),
-    );
-  }, [submitted, items]);
-
   const showTabs = !editing;
   const showCards = !editing;
-  const listToRender = results;
 
   return (
-    <div className="h-screen bg-[#FAFAFA]">
+    <div className="min-h-dvh bg-[#FAFAFA] pb-[91px]">
       <SearchPageHeader
         query={query}
         onQueryChange={setQuery}
-        onSubmit={(q) => {
-          setSubmitted(q);
-          setEditing(false);
-        }}
+        onSubmit={handleSubmit}
         showTabs={showTabs}
         onInputFocus={() => setEditing(true)}
         onInputBlur={() => setEditing(false)}
+        onCategoryChange={handleCategoryChange}
       />
 
       {showCards && (
         <div className="mx-auto w-[393px] space-y-[25px] px-7 py-4">
-          {listToRender.map((it) => (
-            <HotNewsCard
-              key={it.id}
-              title={it.title}
-              desc={it.desc}
-              categories={it.categories}
-              thumbnail={it.thumbnail}
-            />
+          {items.map((it) => (
+            <Link key={it.id} to={`/news/detail/${it.id}`} className="block">
+              <HotNewsCard
+                title={it.title}
+                desc={it.desc}
+                categories={it.categories}
+                thumbnail={it.thumbnail}
+              />
+            </Link>
           ))}
 
-          <div ref={sentinelRef} className="h-1 w-full" />
-
-          {submitted.trim() && listToRender.length === 0 && (
-            <p className="py-8 text-center text-sm text-gray-400">
-              검색 결과가 없습니다.
-            </p>
+          {category !== "전체" && (
+            <div ref={sentinelRef} className="h-1 w-full" />
           )}
         </div>
       )}
