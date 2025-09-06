@@ -6,9 +6,13 @@ import hotNews1 from "../assets/images/hot_news1.png";
 import type { HotNewsRes } from "../types/hot";
 import { fetchHotNewsList } from "../api/hot/getHotNewsList";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { Link } from "react-router-dom";
 =======
 >>>>>>> 6d299c5 (feat: hot 뉴스 불러오기 api 연동)
+=======
+import { Link } from "react-router-dom";
+>>>>>>> ff1f9bd (fix: hot 뉴스 연동 api 수정)
 
 type Badge = { text: string; color: string; bgColor: string };
 type CardItem = {
@@ -35,6 +39,7 @@ export default function HotPage() {
           rank: idx + 1,
           title: d.title,
 <<<<<<< HEAD
+<<<<<<< HEAD
           desc: d.outlet,
           categories: [
             {
@@ -46,20 +51,35 @@ export default function HotPage() {
               text: "IT",
 =======
           desc: `${d.outlet} · ❤️ ${d.likeCount.toLocaleString()}`,
+=======
+          desc: d.outlet,
+>>>>>>> ff1f9bd (fix: hot 뉴스 연동 api 수정)
           categories: [
-            { text: d.outlet, color: "#7F81FF", bgColor: "#EEF0FF" },
             {
+<<<<<<< HEAD
               text: d.orientation || "NEWS",
 >>>>>>> 6d299c5 (feat: hot 뉴스 불러오기 api 연동)
+=======
+              text: "성취",
+              color: "#38D1B8",
+              bgColor: "#7BEAD742",
+            },
+            {
+              text: "IT",
+>>>>>>> ff1f9bd (fix: hot 뉴스 연동 api 수정)
               color: "#979797",
               bgColor: "#ECECEC",
             },
           ],
 <<<<<<< HEAD
+<<<<<<< HEAD
           thumbnail: d.image || hotNews1,
 =======
           thumbnail: hotNews1,
 >>>>>>> 6d299c5 (feat: hot 뉴스 불러오기 api 연동)
+=======
+          thumbnail: d.image || hotNews1,
+>>>>>>> ff1f9bd (fix: hot 뉴스 연동 api 수정)
         }));
 
         setItems(mapped);
@@ -81,12 +101,17 @@ export default function HotPage() {
     <div className="min-h-dvh bg-[#FAFAFA]">
       <Header title="이번주 핫뉴스 TOP 10" />
 <<<<<<< HEAD
+<<<<<<< HEAD
       <div className="pb-[91px relative flex w-full flex-col items-center pt-9">
         <div className="flex w-[393px] flex-col items-center gap-[25px]">
 =======
       <div className="relative flex w-full flex-col items-center pb-[90px] pt-9">
         <div className="flex w-[394px] flex-col items-center gap-[25px]">
 >>>>>>> 6d299c5 (feat: hot 뉴스 불러오기 api 연동)
+=======
+      <div className="pb-[91px relative flex w-full flex-col items-center pt-9">
+        <div className="flex w-[393px] flex-col items-center gap-[25px]">
+>>>>>>> ff1f9bd (fix: hot 뉴스 연동 api 수정)
           {loading && <div>불러오는 중…</div>}
           {err && <div className="text-red-500">{err}</div>}
 
