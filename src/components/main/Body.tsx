@@ -19,7 +19,7 @@ export function Body() {
       <BadNewsView />
       <NewNews data={data} />
       <div className="h-[12px] w-full bg-[#FAFAFA]"></div>
-      <Push />
+      <Push text={""} />
     </main>
   );
 }

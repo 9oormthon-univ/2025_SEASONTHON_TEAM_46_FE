@@ -2,8 +2,9 @@ import { NewsImgCard } from "./NewsImgCard";
 import api from "../../hooks/api";
 import { useEffect, useState } from "react";
 import type { DataProps } from "../../types/DataProps";
+import DefaultImg from "../../assets/images/default_test_img.png";
 
-export function Push() {
+export function Push({ text }: { text: string }) {
   const [categoryNews, setCategoryNews] = useState<DataProps[]>([]);
   const [emotionNews, setEmotionNews] = useState<DataProps[]>([]);
   useEffect(() => {
@@ -19,7 +20,9 @@ export function Push() {
 
   return (
     <article className="mt-[33px] w-[337px]">
-      <p className="text-[20px] font-bold leading-[140%] text-[#2A2A2A]">{`건강한 뉴스 생활을 위해선\n균형 잡힌 정보가 필요해!`}</p>
+      <p className="text-[20px] font-bold leading-[140%] text-[#2A2A2A]">
+        {text || `건강한 뉴스 생활을 위해선\n균형 잡힌 정보가 필요해!`}
+      </p>
       {/* 주제 */}
       <NewsImgCard topic="이런 주제는 어때?" newsList={categoryNewsList} />
       {/* 감정 */}
@@ -33,7 +36,7 @@ function mapToNewsImgCardData(data: DataProps[]) {
     id: item.id,
     title: item.title,
     content: item.summary,
-    imgSrc: item.thumbnail || "/default.png",
+    imgSrc: item.thumbnail || DefaultImg,
     categories: item.category
       ? [{ text: item.category, color: "#7F81FF" }]
       : [],

@@ -1,11 +1,17 @@
+import { useEffect } from "react";
 import type { DataProps } from "../../types/DataProps";
 import { NewsTitle } from "./NewsTitle";
+import { useNavigate } from "react-router-dom";
 
 interface NewNewsProps {
   data: DataProps[];
 }
 
 export function NewNews({ data }: NewNewsProps) {
+  const navigate = useNavigate();
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
   return (
     <article className="mt-[63px] flex w-[337px] flex-col gap-[16px] pb-[25px]">
       <section className="flex items-center gap-[4px]">
@@ -14,9 +20,10 @@ export function NewNews({ data }: NewNewsProps) {
           {data.length}
         </p>
       </section>
-      {data.slice(0, 1).map((news) => (
+      {data.slice(1, 2).map((news) => (
         <NewsTitle
           key={news.id}
+          id={news.id}
           isImgVisible={true}
           categories={[
             {
@@ -32,13 +39,15 @@ export function NewNews({ data }: NewNewsProps) {
           ]}
           title={news.title}
           authorImg={news.thumbnail}
-          meta={`${news.outlet} | ${news.taggedAt}`}
+          meta={`${news.outlet} | ${news.taggedAt.slice(0, 10)}`}
           thumbnail={news.thumbnail}
         />
       ))}
       <button
         className="mt-[22px] flex h-[52px] w-[337px] flex-shrink-0 cursor-pointer items-center justify-center rounded-[10px] bg-[#3D57FE]"
-        onClick={() => {}}
+        onClick={() => {
+          navigate("/search");
+        }}
       >
         <p className="text-[16px] font-[500] text-white">더 보기</p>
       </button>

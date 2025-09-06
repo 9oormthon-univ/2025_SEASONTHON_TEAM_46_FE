@@ -1,18 +1,28 @@
 import { Category } from "../common/Category";
+import { useNavigate } from "react-router-dom";
+import DefaultImage from "../../assets/images/default_test_img.png";
 
 export function NewsCard({
+  id,
   title,
   img,
   content,
 }: {
+  id: number;
   title: string;
   img: string;
   content: string;
 }) {
+  const navigate = useNavigate();
   return (
-    <article className="relative h-[124px] w-[240px] rounded-[10px]">
+    <article
+      className="relative h-[124px] w-[240px] rounded-[10px]"
+      onClick={() => {
+        navigate(`/news/detail/${id}`);
+      }}
+    >
       <img
-        src={img}
+        src={img || DefaultImage}
         alt="News"
         className="h-full w-full rounded-[10px] object-cover"
       />

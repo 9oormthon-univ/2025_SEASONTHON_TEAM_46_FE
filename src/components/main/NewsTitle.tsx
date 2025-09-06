@@ -11,8 +11,10 @@
 
 import { Category } from "../common/Category";
 import type { NewsTitleProps } from "../../types/NewsTitleProps";
+import { useNavigate } from "react-router-dom";
 
 export function NewsTitle({
+  id,
   isImgVisible,
   categories,
   title,
@@ -20,8 +22,13 @@ export function NewsTitle({
   meta,
   thumbnail,
 }: NewsTitleProps) {
+  const navigate = useNavigate();
+
   return (
-    <article className="flex flex-col gap-[16px]">
+    <article
+      className="flex cursor-pointer flex-col gap-[16px]"
+      onClick={() => navigate(`/news/detail/${id}`)}
+    >
       <section className="flex flex-col gap-[20px]">
         {isImgVisible && thumbnail && (
           <img src={thumbnail} alt="뉴스 썸네일" height={156} />

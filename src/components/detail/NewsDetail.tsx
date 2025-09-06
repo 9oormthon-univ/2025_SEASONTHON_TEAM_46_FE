@@ -57,11 +57,11 @@ export function NewsDetail({
                   width={16}
                   height={14}
                 />
-                <p>{likes}</p>
+                <p>{likes || 0}</p>
               </div>
               <div className="flex items-center gap-[4px]">
                 <img src={ChatSvg} alt="Chat Icon" className="cursor-pointer" />
-                <p>{comments}</p>
+                <p>{comments || 0}</p>
               </div>
             </div>
           </section>
