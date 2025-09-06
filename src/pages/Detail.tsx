@@ -8,10 +8,13 @@ import { useParams } from "react-router-dom";
 import type { DataProps } from "../types/DataProps";
 import { Push } from "../components/main/Push";
 import DefaultImage from "../assets/images/default_test_img.png";
+import BottomSheet from "../components/common/BottomSheet";
+import { BottomSheetDetail } from "../components/detail/BottomSheetDetail";
 
 export default function Detail() {
   const [newsData, setNewsData] = useState<DataProps>();
   const [newsBody, setNewsBody] = useState<string>("");
+  const [openSheet, setOpenSheet] = useState(false);
   const { id } = useParams<{ id: string }>();
   const setBottomNav: (value: boolean) => void = useStore(
     (state) => state.setBottomNav,
@@ -32,6 +35,11 @@ export default function Detail() {
         setNewsBody(res.data.body);
       });
       api.post(`/api/news-view/${id}`).then(() => {});
+      api.get(`/api/analysis/caution`).then((res) => {
+        if (res.data?.rate > 65) {
+          setOpenSheet(true);
+        }
+      });
     }
   }, [id]);
 
@@ -68,6 +76,9 @@ export default function Detail() {
       />
       <Push text={"이런 뉴스도 한 번 봐봐!"} />
       <div className="fixed bottom-[0px] left-1/2 z-10 h-[72px] w-full -translate-x-1/2 bg-gradient-to-t from-[#FAFAFA] to-transparent" />
+      <BottomSheet open={openSheet} onClose={() => setOpenSheet(false)}>
+        <BottomSheetDetail setOpenSheet={setOpenSheet} />
+      </BottomSheet>
     </article>
   );
 }
