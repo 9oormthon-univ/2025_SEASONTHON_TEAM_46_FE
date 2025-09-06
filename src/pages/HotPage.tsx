@@ -8,12 +8,14 @@ import { fetchHotNewsList } from "../api/hot/getHotNewsList";
 import { Link } from "react-router-dom";
 
 type Badge = { text: string; color: string; bgColor: string };
+
 type CardItem = {
   id: number;
   rank: number;
   title: string;
   desc: string;
-  categories: Badge[];
+  category: Badge | null;
+  sentiment: Badge | null;
   thumbnail: string;
 };
 
@@ -28,19 +30,29 @@ export default function HotPage() {
         const list: HotNewsRes[] = await fetchHotNewsList();
 
         const mapped: CardItem[] = list.map((d, idx) => {
-          const cat = d.categoryMeta;
-          const catBadge: Badge = {
-            text: cat?.text ?? cat?.label ?? "뉴스",
-            color: cat?.color ?? "#979797",
-            bgColor: cat?.bgColor ?? "#ECECEC",
-          };
+          const categoryBadge: Badge | null = d.categoryMeta?.text
+            ? {
+                text: d.categoryMeta.text,
+                color: d.categoryMeta.color ?? "#979797",
+                bgColor: d.categoryMeta.bgColor ?? "#ECECEC",
+              }
+            : null;
+
+          const sentimentBadge: Badge | null = d.sentimentMeta?.text
+            ? {
+                text: d.sentimentMeta.text,
+                color: d.sentimentMeta.color ?? "#979797",
+                bgColor: d.sentimentMeta.bgColor ?? "#ECECEC",
+              }
+            : null;
 
           return {
             id: d.id,
             rank: idx + 1,
             title: d.title,
             desc: d.outlet,
-            categories: [catBadge],
+            category: categoryBadge,
+            sentiment: sentimentBadge,
             thumbnail: d.image || hotNews1,
           };
         });
@@ -72,8 +84,9 @@ export default function HotPage() {
                   rank={it.rank}
                   title={it.title}
                   desc={it.desc}
-                  categories={it.categories}
                   thumbnail={it.thumbnail}
+                  category={it.category}
+                  sentiment={it.sentiment}
                 />
               </Link>
             ))}

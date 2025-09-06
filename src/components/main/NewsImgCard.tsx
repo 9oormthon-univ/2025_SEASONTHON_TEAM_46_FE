@@ -37,16 +37,22 @@ export function NewsImgCard({
             <div className="flex gap-[21px]">
               <div className="flex flex-col gap-[4px]">
                 <div className="flex gap-[3px]">
-                  <Category
-                    text={news.sentiment?.text || ""}
-                    textColor={news.sentiment?.color || ""}
-                    bgColor={news.sentiment?.bgColor || ""}
-                  />
-                  <Category
-                    text={news.categories.text || ""}
-                    textColor={news.categories.color || ""}
-                    bgColor={news.categories.bgColor || ""}
-                  />
+
+                  {news.sentiment && (
+                    <Category
+                      text={news.sentiment.text || ""}
+                      textColor={news.sentiment.color || ""}
+                      bgColor={news.sentiment.bgColor || ""}
+                    />
+                  )}
+                  {news.category && (
+                    <Category
+                      text={news.category.text || ""}
+                      textColor={news.category.color || ""}
+                      bgColor={news.category.bgColor || ""}
+                    />
+                  )}
+
                 </div>
                 <p className="line-clamp-2 w-[189px] text-[16px] font-bold leading-[140%] tracking-[-0.48px] text-[#2A2A2A]">
                   {news.title}

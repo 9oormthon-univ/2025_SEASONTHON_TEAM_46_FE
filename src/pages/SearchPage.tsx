@@ -10,11 +10,14 @@ import { getNewsByCategory } from "../api/search/getCategoryNews";
 import api from "../hooks/api";
 import type { SearchNewsItem } from "../types/search";
 
+type CategoryTag = { text: string; color: string; bgColor: string } | null;
+
 type Item = {
   id: number;
   title: string;
   desc: string;
-  categories: { text: string; color: string; bgColor: string }[];
+  category: CategoryTag;
+  sentiment: CategoryTag;
   thumbnail: string;
 };
 
@@ -23,6 +26,11 @@ type SearchNewsRow = SearchNewsItem & {
   outlet?: string | null;
   thumbnail?: string | null;
   categoryMeta?: {
+    text?: string | null;
+    color?: string | null;
+    bgColor?: string | null;
+  } | null;
+  sentimentMeta?: {
     text?: string | null;
     color?: string | null;
     bgColor?: string | null;
@@ -36,6 +44,11 @@ type AllNewsRow = {
   summary?: string | null;
   thumbnail?: string | null;
   categoryMeta?: {
+    text?: string | null;
+    color?: string | null;
+    bgColor?: string | null;
+  } | null;
+  sentimentMeta?: {
     text?: string | null;
     color?: string | null;
     bgColor?: string | null;
@@ -76,40 +89,48 @@ function mapCategoryKeyToServer(cat: CategoryKey): string | null {
 }
 
 const toCardItemsFromPaged = (arr: SearchNewsRow[]): Item[] =>
-  (arr ?? []).map((d) => {
-    const cm = d.categoryMeta ?? {};
-    return {
-      id: d.id,
-      title: d.title,
-      desc: (d.summary ?? d.outlet ?? "").trim(),
-      categories: [
-        {
-          text: cm.text ?? "NEWS",
-          color: cm.color ?? "#979797",
-          bgColor: cm.bgColor ?? "#ECECEC",
-        },
-      ],
-      thumbnail: d.thumbnail ?? hotNews1,
-    };
-  });
+  (arr ?? []).map((d) => ({
+    id: d.id,
+    title: d.title,
+    desc: (d.summary ?? d.outlet ?? "").trim(),
+    thumbnail: d.thumbnail ?? hotNews1,
+    category: d.categoryMeta?.text
+      ? {
+          text: d.categoryMeta.text,
+          color: d.categoryMeta.color ?? "#979797",
+          bgColor: d.categoryMeta.bgColor ?? "#ECECEC",
+        }
+      : null,
+    sentiment: d.sentimentMeta?.text
+      ? {
+          text: d.sentimentMeta.text,
+          color: d.sentimentMeta.color ?? "#979797",
+          bgColor: d.sentimentMeta.bgColor ?? "#ECECEC",
+        }
+      : null,
+  }));
 
 const toCardItemsFromAll = (arr: AllNewsRow[]): Item[] =>
-  (arr ?? []).map((d) => {
-    const cm = d.categoryMeta ?? {};
-    return {
-      id: d.id,
-      title: d.title,
-      desc: (d.summary ?? d.outlet ?? "").trim(),
-      categories: [
-        {
-          text: cm.text ?? "NEWS",
-          color: cm.color ?? "#979797",
-          bgColor: cm.bgColor ?? "#ECECEC",
-        },
-      ],
-      thumbnail: d.thumbnail ?? hotNews1,
-    };
-  });
+  (arr ?? []).map((d) => ({
+    id: d.id,
+    title: d.title,
+    desc: (d.summary ?? d.outlet ?? "").trim(),
+    thumbnail: d.thumbnail ?? hotNews1,
+    category: d.categoryMeta?.text
+      ? {
+          text: d.categoryMeta.text,
+          color: d.categoryMeta.color ?? "#979797",
+          bgColor: d.categoryMeta.bgColor ?? "#ECECEC",
+        }
+      : null,
+    sentiment: d.sentimentMeta?.text
+      ? {
+          text: d.sentimentMeta.text,
+          color: d.sentimentMeta.color ?? "#979797",
+          bgColor: d.sentimentMeta.bgColor ?? "#ECECEC",
+        }
+      : null,
+  }));
 
 export default function SearchPage() {
   const [query, setQuery] = useState("");
@@ -167,7 +188,7 @@ export default function SearchPage() {
     (it: Item) => {
       const want = tabToKoreanLabel(category);
       if (!want) return true;
-      const got = it.categories?.[0]?.text || "";
+      const got = it.category?.text || "";
       return got === want;
     },
     [category],
@@ -282,8 +303,9 @@ export default function SearchPage() {
               <HotNewsCard
                 title={it.title}
                 desc={it.desc}
-                categories={it.categories}
+                category={it.category}
                 thumbnail={it.thumbnail}
+                sentiment={it.sentiment}
               />
             </Link>
           ))}

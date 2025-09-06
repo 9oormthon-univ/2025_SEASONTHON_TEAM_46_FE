@@ -1,16 +1,17 @@
-export interface NewsItem {
+export type CategoryTag = {
+  text: string | null;
+  color: string | null;
+  bgColor: string | null;
+} | null;
+
+export type NewsItem = {
   id: number;
   title: string;
   content: string;
   imgSrc: string;
-  categories: {
-    text: string | null;
-    color: string | null;
-    bgColor: string | null;
-  };
-  sentiment?: {
-    text: string | null;
-    color: string | null;
-    bgColor: string | null;
-  };
-}
+
+  category: CategoryTag;
+  sentiment: CategoryTag;
+};
+
+

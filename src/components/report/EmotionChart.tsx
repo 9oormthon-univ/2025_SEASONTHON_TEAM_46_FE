@@ -47,13 +47,13 @@ export default function EmotionChart({
       className={className}
     >
       {/* 트랙 */}
-      <path
+      {/* <path
         d={d}
         fill="none"
         stroke="#EDEDED"
         strokeWidth={strokeWidth}
         strokeLinecap="round"
-      />
+      /> */}
 
       {/* 세그먼트 */}
       {segments.map((seg, i) => {

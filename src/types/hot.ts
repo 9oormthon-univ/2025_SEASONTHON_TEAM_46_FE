@@ -15,5 +15,11 @@ export type HotNewsRes = {
     color?: string;
     bgColor?: string;
   };
-
+  sentimentMeta?: {
+    code?: string;
+    text?: string;
+    description?: string;
+    color?: string;
+    bgColor?: string;
+  };
 };

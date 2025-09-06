@@ -57,7 +57,6 @@ export default function EmotionHighlight({
       viewBox={`0 0 ${width} ${height}`}
       className={className}
     >
-      {/* 선택 세그먼트만 표시 (약한 글로우 옵션) */}
       <path
         d={d}
         fill="none"
@@ -68,7 +67,6 @@ export default function EmotionHighlight({
         style={{
           strokeDasharray: `${len} ${pathLength}`,
           strokeDashoffset: -offset,
-          filter: `drop-shadow(0 0 8px ${target.color})`,
         }}
       />
     </svg>

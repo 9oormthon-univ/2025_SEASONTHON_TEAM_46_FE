@@ -70,33 +70,26 @@ export default function EmotionToastSheet({ open, emotion, onClose }: Props) {
     news?.outlet ||
     (news ? "요약 정보가 없습니다." : "데이터 없음");
 
-  const cardCats = useMemo(() => {
-    const primary =
-      meta && meta.subs?.length
-        ? {
-            text: meta.subs[0],
-            color: meta.color,
+  const sentimentTag = useMemo(() => {
+    if (!emotion || !meta) return null;
+    return {
+      text: meta.subs?.[0] || emotion,
+      color: meta.color,
+      bgColor: meta.bgColor ?? "#7BEAD742",
+    };
+  }, [emotion, meta]);
 
-            bgColor: meta.bgColor ?? "#7BEAD742",
-          }
-        : {
-            text: emotion ?? "감정",
-            color: meta?.color ?? "#7BEAD7",
-            bgColor: "#7BEAD742",
-          };
-
-    const secondText = news?.category
+  const categoryTag = useMemo(() => {
+    if (!news) return { text: "뉴스", color: "#8C8C8C", bgColor: "#ECECEC" };
+    const text = news.category
       ? (categoryLabelMap[news.category] ?? news.category)
       : "뉴스";
-
-    const secondary = {
-      text: secondText,
+    return {
+      text,
       color: "#8C8C8C",
       bgColor: "#ECECEC",
     };
-
-    return [primary, secondary];
-  }, [meta, emotion, news]);
+  }, [news]);
   const cardThumb = news?.thumbnail || hotNewsThumb;
 
   return (
@@ -110,14 +103,14 @@ export default function EmotionToastSheet({ open, emotion, onClose }: Props) {
         onClick={onClose}
       />
       <div
-        className={`fixed bottom-0 left-1/2 z-50 w-[394px] -translate-x-1/2 transform transition-transform duration-300 ${
+        className={`fixed bottom-0 left-1/2 z-50 w-[393px] -translate-x-1/2 transform transition-transform duration-300 ${
           open ? "translate-y-0" : "translate-y-full"
         }`}
         aria-hidden={!open}
       >
-        <div className="relative mx-auto h-[438px] w-[394px] rounded-t-[20px] bg-white shadow-[0_0_20px_rgba(0,0,0,0.04)]">
+        <div className="relative mx-auto flex max-h-[85vh] w-full flex-col overflow-y-auto rounded-t-[20px] bg-white pb-6 shadow-[0_0_20px_rgba(0,0,0,0.04)]">
           <div className="flex justify-center pt-6">
-            <div className="h-[5px] w-[40px] rounded-full bg-[#EAEAEA]" />
+            <div className="h-[5px] w-[40px] flex-shrink-0 rounded-full bg-[#EAEAEA]" />
           </div>
 
           <h3 className="[font-family:'Pretendard Variable'] mt-4 w-full text-center text-[24px] font-bold leading-[160%] tracking-[-0.48px] text-black">
@@ -139,8 +132,9 @@ export default function EmotionToastSheet({ open, emotion, onClose }: Props) {
             <HotNewsCard
               title={cardTitle}
               desc={cardDesc}
-              categories={cardCats}
               thumbnail={cardThumb}
+              category={categoryTag}
+              sentiment={sentimentTag}
               className="w-full"
             />
           </div>

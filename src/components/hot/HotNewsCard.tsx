@@ -1,11 +1,18 @@
 import { Category } from "../common/Category";
 
+type CategoryTag = {
+  text: string;
+  color: string;
+  bgColor: string;
+} | null;
+
 type HotNewsCardProps = {
   rank?: number;
   title: string;
   desc: string;
-  categories: { text: string; color: string; bgColor: string }[];
   thumbnail: string;
+  category?: CategoryTag;
+  sentiment?: CategoryTag;
   className?: string;
 };
 
@@ -13,8 +20,9 @@ export default function HotNewsCard({
   rank,
   title,
   desc,
-  categories,
+  category,
   thumbnail,
+  sentiment,
   className = "",
 }: HotNewsCardProps) {
   const hasRank = typeof rank === "number";
@@ -29,14 +37,20 @@ export default function HotNewsCard({
       <div className="flex gap-[21px]">
         <div className={`min-w-0 flex-1 ${gridClass}`}>
           <div className={`${colForCats} row-start-1 mb-[10px] flex gap-[3px]`}>
-            {categories.map((c, i) => (
+            {sentiment && (
               <Category
-                key={`${c.text}-${i}`}
-                text={c.text}
-                textColor={c.color}
-                bgColor={c.bgColor}
+                text={sentiment.text}
+                textColor={sentiment.color}
+                bgColor={sentiment.bgColor}
               />
-            ))}
+            )}
+            {category && (
+              <Category
+                text={category.text}
+                textColor={category.color}
+                bgColor={category.bgColor}
+              />
+            )}
           </div>
 
           {hasRank && (
